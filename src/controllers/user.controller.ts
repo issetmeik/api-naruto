@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
+import { authMiddleware } from '../middlewares/auth';
 
 @controller('/user')
 export class UserController {
@@ -12,7 +13,7 @@ export class UserController {
     res.status(201).json({ data: newUser });
   }
 
-  @httpGet('/:id')
+  @httpGet('/:id', authMiddleware)
   async getOne(req: Request, res: Response) {
     const id = req.params.id;
     const findUser = await this._service.findOne({ id });

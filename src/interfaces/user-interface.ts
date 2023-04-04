@@ -13,6 +13,7 @@ export interface IUser {
   externalId: string | null;
 }
 
-export interface IHash {
-  hash: string;
+export interface IAuth {
+  token: string;
+  userId: string;
 }
