@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { injectable } from 'inversify';
 import { CreateUserDto, UserFindOneDto } from '../dtos';
 import { IUser } from '../interfaces/user-interface';
+import * as bcrypt from 'bcryptjs';
 
 @injectable()
 export class UserRepository {
@@ -12,7 +13,7 @@ export class UserRepository {
   }
 
   async create(entity: CreateUserDto): Promise<IUser> {
-    const passwordHash = await this.encryptPassword(entity.password);
+    const hashPassword = await this.generateHash(entity.password);
 
     return await this._db.user.create({
       data: {
@@ -20,7 +21,7 @@ export class UserRepository {
         email: entity.email,
         avatar: entity.avatar,
         role: entity.role,
-        password: passwordHash,
+        password: hashPassword,
         birthDate: entity.birthDate,
         externalId: entity.externalId,
       },
@@ -28,10 +29,22 @@ export class UserRepository {
   }
 
   async findOne(entity: string): Promise<IUser | null> {
-    return await this._db.user.findUnique({
+    return await this._db.user.findFirst({
       where: {
         id: entity,
       },
     });
+  }
+
+  async findByEmail(entity: string): Promise<IUser | null> {
+    return await this._db.user.findFirst({
+      where: {
+        email: entity,
+      },
+    });
+  }
+
+  generateHash(password: string): Promise<string> {
+    return bcrypt.hash(password, 8);
   }
 }

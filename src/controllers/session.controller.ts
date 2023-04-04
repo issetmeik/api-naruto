@@ -1,25 +1,18 @@
 import { controller, httpPost } from 'inversify-express-utils';
 import { Response, Request } from 'express';
+import { SessionService } from '../services/session.service';
 import { UserService } from '../services/user.service';
 
 @controller('/session')
 export class SessionController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly _service: SessionService) {}
 
   @httpPost('/')
   async store(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const user = await this.userService.findByEmail({ email });
+    const token = await this._service.generateToken({ email, password });
 
-    if (!user) {
-      return res.status(404).json({ error: 'user not found' });
-    }
-
-    if (!(await this.userService.checkPassword(password, user.password))) {
-      return res.status(400).json({ error: 'wrong password' });
-    }
-
-    const { id, name } = user;
+    res.status(200).json({ data: token });
   }
 }

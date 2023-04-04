@@ -22,7 +22,7 @@ model User {
   avatar     String       
   role       UserRoleType @default(CUSTOMER)
   birthDate  DateTime
-  password   String       @db.Char(300)
+  password   String       
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   deletedAt  DateTime?

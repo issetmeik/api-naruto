@@ -22,24 +22,17 @@ export class UserService {
 
   async create(user: CreateUserDto): Promise<UserDto> {
     const response = await this._userRepo.create(user);
-
     return this.findOne({ id: response.id });
   }
 
   async findByEmail(user: UserFindByEmailDto): Promise<UserDto> {
-    const foundUser = await this._userRepo.findOne(user.email);
+    const foundUser = await this._userRepo.findByEmail(user.email);
     if (!foundUser) throw new Error('User not found');
 
     return UserDto.from(foundUser);
   }
 
-  async encryptPassword(password: string): Promise<string> {
-    const passwordHash = bcrypt.hash(password, 8);
-
-    return passwordHash;
-  }
-
-  async checkPassword(password: string, hash: string): Promise<boolean> {
+  checkPassword(password: string, hash: string): Promise<boolean> {
     return bcrypt.compare(password, hash);
   }
 }

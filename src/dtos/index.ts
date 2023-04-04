@@ -5,3 +5,5 @@ export * from './user/create-user.dto';
 export * from './user/findone-user.dto';
 export * from './user/user.dto';
 export * from './user/findbyemail-user.dto';
+export * from './session/create-token.dto';
+export * from './session/token.dto';
