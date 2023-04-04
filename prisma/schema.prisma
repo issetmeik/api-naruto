@@ -1,0 +1,90 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URI")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Subscriber {
+  id                  String   @id @default(uuid()) @db.Char(36)
+  name                String   @db.Char(100)
+  subscribedToChannel String   @db.Char(100)
+  subscribeDate       DateTime @default(now())
+}
+
+model User {
+  id         String       @id @default(uuid()) @db.Char(36)
+  externalId String?      @unique
+  email      String       @unique
+  name       String       
+  avatar     String       
+  role       UserRoleType @default(CUSTOMER)
+  birthDate  DateTime
+  password   String       @db.Char(300)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  deletedAt  DateTime?
+}
+
+model Cla {
+  id         String      @id @default(uuid()) @db.Char(36)
+  externalId String      @unique
+  icon       String      
+  name       String      
+  link       String      
+  favorites  Favorites[]
+  Character  Character[]
+}
+
+model Character {
+  id            String      @id @default(uuid()) @db.Char(36)
+  externalId    String      @unique
+  claId         String?    
+  name          String      
+  about         String      
+  gender        GenderType  @default(UNDEFINED)
+  birthDate     DateTime
+  age           String      
+  height        String      
+  weight        String      
+  bloodType     String      
+  occupation    String      
+  afiliation    String      
+  partner       String      
+  ninjaRank     String      
+  ninjaRegister String      
+  page          String      
+  favorites     Favorites[]
+  cla           Cla?        @relation(fields: [claId], references: [id])
+}
+
+model Favorites {
+  id          String        @id @default(uuid()) @db.Char(36)
+  userId      String?       
+  claId       String?       
+  characterId String?       
+  type        FavoriteTypes
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+  cla         Cla?          @relation(fields: [claId], references: [id])
+  character   Character?    @relation(fields: [characterId], references: [id])
+}
+
+enum UserRoleType {
+  CUSTOMER
+  ADMIN
+}
+
+enum GenderType {
+  MAN
+  WOMEN
+  UNDEFINED
+}
+
+enum FavoriteTypes {
+  character
+  cla
+}
