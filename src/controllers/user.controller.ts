@@ -17,6 +17,6 @@ export class UserController {
   async getOne(req: Request, res: Response) {
     const id = req.params.id;
     const findUser = await this._service.findOne({ id });
-    res.status(200).json({ data: { findUser } });
+    res.status(200).json({ data: findUser });
   }
 }

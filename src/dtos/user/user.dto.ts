@@ -10,7 +10,7 @@ export class UserDto {
     public readonly birthDate: Date,
     public readonly password: string,
     public readonly createdAt: Date,
-    public readonly updatedAt?: Date | null,
+    public readonly updatedAt: Date,
     public readonly externalId?: string | null
   ) {}
 
@@ -23,6 +23,7 @@ export class UserDto {
     if (!user.password) throw new Error('Missing porperty password');
     if (!user.birthDate) throw new Error('Missing porperty birthDate');
     if (!user.createdAt) throw new Error('Missing porperty createdAt');
+    if (!user.updatedAt) throw new Error('Missing porperty updatedAt');
 
     return new UserDto(
       user.id,
