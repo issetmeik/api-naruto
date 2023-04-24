@@ -28,10 +28,10 @@ export class UserRepository {
     });
   }
 
-  async findOne(entity: string): Promise<IUser | null> {
+  async findOne(id: string): Promise<IUser | null> {
     return await this._db.user.findFirst({
       where: {
-        id: entity,
+        id: id,
       },
     });
   }

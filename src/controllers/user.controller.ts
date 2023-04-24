@@ -2,10 +2,14 @@ import { Response, Request } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
 import { authMiddleware } from '../middlewares/auth';
+import { FavoriteService } from '../services/favorite.service';
 
 @controller('/user')
 export class UserController {
-  constructor(private readonly _service: UserService) {}
+  constructor(
+    private readonly _service: UserService,
+    private readonly _favoriteService: FavoriteService
+  ) {}
 
   @httpPost('/')
   async store(req: Request, res: Response) {

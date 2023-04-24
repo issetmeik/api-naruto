@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
-import { controller, httpPost } from 'inversify-express-utils';
+import {
+  controller,
+  httpGet,
+  httpPost,
+  request,
+  response,
+} from 'inversify-express-utils';
 import { CharacterService } from '../services/character.service';
+import CharacterFindManyDto from '../dtos/character/findmany-character.dto';
 
 @controller('/character')
 export class CharacterController {
@@ -8,7 +15,13 @@ export class CharacterController {
 
   @httpPost('/')
   async store(req: Request, res: Response) {
-    const newCla = await this._service.create(req.body);
-    res.status(201).json({ data: newCla });
+    const newCharacter = await this._service.create(req.body);
+    res.status(201).json({ data: newCharacter });
+  }
+
+  @httpGet('/')
+  async index(req: Request, res: Response) {
+    const characters = await this._service.findMany(req.body);
+    res.status(201).json({ data: characters });
   }
 }

@@ -26,6 +26,7 @@ model User {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   deletedAt  DateTime?
+  favorites  Favorite[]
 }
 
 model Cla {
@@ -38,16 +39,16 @@ model Cla {
   updatedAt  DateTime    @updatedAt
   deletedAt  DateTime?
   Character  Character[]
-  Favorites  Favorites[]
+  Favorites  Favorite[]
 }
 
 model Character {
-  id            String      @id @default(uuid()) @db.Char(36)
-  externalId    String      @unique
+  id            String     @id @default(uuid()) @db.Char(36)
+  externalId    String     @unique
   claId         String?
   name          String
   about         String
-  gender        GenderType  @default(UNDEFINED)
+  gender        GenderType @default(UNDEFINED)
   birthDate     DateTime
   age           String
   height        String
@@ -59,16 +60,16 @@ model Character {
   ninjaRank     String
   ninjaRegister String
   page          String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   deletedAt     DateTime?
-  favorites     Favorites[]
-  cla           Cla?        @relation(fields: [claId], references: [id])
+  favorites     Favorite[]
+  cla           Cla?       @relation(fields: [claId], references: [id])
 }
 
-model Favorites {
+model Favorite {
   id          String        @id @default(uuid()) @db.Char(36)
-  userId      String?
+  userId      String
   claId       String?
   characterId String?
   type        FavoriteTypes
@@ -77,6 +78,7 @@ model Favorites {
   deletedAt   DateTime?
   cla         Cla?          @relation(fields: [claId], references: [id])
   character   Character?    @relation(fields: [characterId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
 }
 
 enum UserRoleType {

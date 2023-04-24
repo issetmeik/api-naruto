@@ -13,3 +13,7 @@ export * from './cla/cla.dto';
 export * from './character/create-character.dto';
 export * from './character/findone-character.dto';
 export * from './character/character.dto';
+export * from './character/findmany-character.dto';
+export * from './favorites/create-favorite.dto';
+export * from './favorites/favorite.dto';
+export * from './favorites/findone-favorite.dto';

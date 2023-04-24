@@ -18,4 +18,10 @@ export class ClaService {
 
     return ClaDto.from(foundCla);
   }
+
+  async findMany(): Promise<Array<ICla>> {
+    const clas = await this._claRepo.find();
+    if (!clas) throw new Error('clas not found');
+    return ClaDto.fromMany(clas);
+  }
 }

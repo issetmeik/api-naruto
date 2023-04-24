@@ -25,4 +25,8 @@ export class ClaRepository {
       },
     });
   }
+
+  async find(): Promise<Array<ICla>> {
+    return await this._db.cla.findMany();
+  }
 }

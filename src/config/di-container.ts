@@ -14,6 +14,9 @@ import { ClaController } from '../controllers/cla.controller';
 import { CharacterController } from '../controllers/character.controller';
 import { CharacterService } from '../services/character.service';
 import { CharacterRepository } from '../repositories/character.repository';
+import { FavoriteController } from '../controllers/favorite.controller';
+import { FavoriteService } from '../services/favorite.service';
+import { FavoriteRepository } from '../repositories/favorite.repository';
 
 export const container = new Container({
   defaultScope: 'Singleton',
@@ -30,7 +33,10 @@ container.bind(SessionController).toSelf();
 container.bind(SessionService).toSelf();
 container.bind(ClaRepository).toSelf();
 container.bind(ClaService).toSelf();
-container.bind(ClaController);
+container.bind(ClaController).toSelf();
 container.bind(CharacterController).toSelf();
 container.bind(CharacterService).toSelf();
 container.bind(CharacterRepository).toSelf();
+container.bind(FavoriteController).toSelf();
+container.bind(FavoriteService).toSelf();
+container.bind(FavoriteRepository).toSelf();
