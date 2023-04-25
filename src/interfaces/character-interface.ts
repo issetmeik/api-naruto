@@ -1,4 +1,5 @@
 import { GenderType } from '@prisma/client';
+import { ICla } from './cla-interface';
 
 export interface ICharacter {
   id: string;
@@ -19,5 +20,4 @@ export interface ICharacter {
   page: string;
   createdAt: Date;
   updatedAt: Date;
-  claId: string | null;
 }

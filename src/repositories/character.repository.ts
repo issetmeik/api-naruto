@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import { injectable } from 'inversify';
-import { ClaFindOneDto, CreateCharacterDto } from '../dtos';
+import {
+  CharacterFindManyDto,
+  CharacterFindOneDto,
+  CreateCharacterDto,
+} from '../dtos';
 import { ICharacter } from '../interfaces/character-interface';
-import CharacterFindManyDto from '../dtos/character/findmany-character.dto';
 
 @injectable()
 export class CharacterRepository {
@@ -19,10 +22,13 @@ export class CharacterRepository {
     });
   }
 
-  async findOne(dto: ClaFindOneDto): Promise<ICharacter | null> {
+  async findOne(dto: CharacterFindOneDto): Promise<ICharacter | null> {
     return await this._db.character.findFirst({
       where: {
         ...dto,
+      },
+      include: {
+        cla: true,
       },
     });
   }

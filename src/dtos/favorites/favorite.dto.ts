@@ -1,4 +1,6 @@
 import { FavoriteTypes } from '@prisma/client';
+import { ICla } from '../../interfaces/cla-interface';
+import { ICharacter } from '../../interfaces/character-interface';
 
 export class FavoriteDto {
   constructor(
@@ -7,8 +9,8 @@ export class FavoriteDto {
     public readonly type: FavoriteTypes,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
-    public readonly characterId?: string | null,
-    public readonly claId?: string | null
+    public readonly cla?: ICla,
+    public readonly character?: ICharacter
   ) {}
 
   static from(favorite: Partial<FavoriteDto>) {
@@ -24,8 +26,8 @@ export class FavoriteDto {
       favorite.type,
       favorite.createdAt,
       favorite.updatedAt,
-      favorite.claId,
-      favorite.characterId
+      favorite.cla,
+      favorite.character
     );
   }
 

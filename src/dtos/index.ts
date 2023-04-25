@@ -17,3 +17,5 @@ export * from './character/findmany-character.dto';
 export * from './favorites/create-favorite.dto';
 export * from './favorites/favorite.dto';
 export * from './favorites/findone-favorite.dto';
+export * from './favorites/findmany-favorite.dto';
+export * from './favorites/delete-favorite.dto';

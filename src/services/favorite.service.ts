@@ -1,5 +1,11 @@
 import { injectable } from 'inversify';
-import { CreateFavoriteDto, FavoriteDto, FavoriteFindOneDto } from '../dtos';
+import {
+  CreateFavoriteDto,
+  FavoriteDeleteDto,
+  FavoriteDto,
+  FavoriteFindManyDto,
+  FavoriteFindOneDto,
+} from '../dtos';
 import { FavoriteRepository } from '../repositories/favorite.repository';
 
 @injectable()
@@ -16,5 +22,18 @@ export class FavoriteService {
     if (!foundFavorite) throw new Error('Favorite not found');
 
     return FavoriteDto.from(foundFavorite);
+  }
+
+  async findMany(dto: FavoriteFindManyDto): Promise<Array<FavoriteDto>> {
+    const favorites = await this._favoriteRepo.find(dto);
+    return FavoriteDto.fromMany(favorites);
+  }
+
+  async delete(dto: FavoriteDeleteDto): Promise<void> {
+    const favorite = await this.findOne({ id: dto.id });
+    if (favorite.userId != dto.userId) {
+      throw new Error('operation not allowed');
+    }
+    await this._favoriteRepo.delete(dto);
   }
 }

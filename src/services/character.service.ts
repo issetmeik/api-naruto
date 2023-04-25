@@ -1,8 +1,12 @@
 import { injectable } from 'inversify';
-import { CharacterDto, CharacterFindOneDto, CreateCharacterDto } from '../dtos';
+import {
+  CharacterDto,
+  CharacterFindManyDto,
+  CharacterFindOneDto,
+  CreateCharacterDto,
+} from '../dtos';
 import { ICharacter } from '../interfaces/character-interface';
 import { CharacterRepository } from '../repositories/character.repository';
-import CharacterFindManyDto from '../dtos/character/findmany-character.dto';
 
 @injectable()
 export class CharacterService {

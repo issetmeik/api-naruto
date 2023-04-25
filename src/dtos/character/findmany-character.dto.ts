@@ -1,7 +1,9 @@
 import { GenderType } from '@prisma/client';
 import BaseFindManyDto from '../baseFindMany.dto';
+import { ICla } from '../../interfaces/cla-interface';
+import { ICharacter } from '../../interfaces/character-interface';
 
-export default class CharacterFindManyDto {
+export class CharacterFindManyDto {
   constructor(
     public page: number,
     public pageSize: number,

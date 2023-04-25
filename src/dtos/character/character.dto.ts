@@ -1,4 +1,5 @@
 import { GenderType } from '@prisma/client';
+import { ICla } from '../../interfaces/cla-interface';
 
 export class CharacterDto {
   constructor(
@@ -20,7 +21,7 @@ export class CharacterDto {
     public readonly page: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
-    public readonly claId: string | null = null
+    public readonly cla?: ICla
   ) {}
 
   static from(body: Partial<CharacterDto>) {
@@ -62,7 +63,7 @@ export class CharacterDto {
       body.page,
       body.createdAt,
       body.updatedAt,
-      body.claId
+      body.cla
     );
   }
 
