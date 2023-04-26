@@ -1,4 +1,4 @@
-import { Favorites, UserRoleType } from '@prisma/client';
+import { Favorite, UserRoleType } from '@prisma/client';
 
 export interface IUser {
   id: string;
