@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
-import { authMiddleware } from '../middlewares/auth';
+import { authMiddleware } from '../../middlewares/auth';
 import { FavoriteService } from '../services/favorite.service';
 
 @controller('/user')

@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config/auth';
 import { Response, Request, NextFunction } from 'express';
-import { IAuth } from '../interfaces/user-interface';
+import { IAuth } from '../app/interfaces/user-interface';
 
 interface DecodedToken extends JwtPayload {
   id: string;

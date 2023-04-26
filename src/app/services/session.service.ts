@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { CreateTokenDto, TokenDto } from '../dtos';
 import * as Jwt from 'jsonwebtoken';
-import config from '../config/auth';
+import config from '../../config/auth';
 import { UserService } from './user.service';
 
 @injectable()

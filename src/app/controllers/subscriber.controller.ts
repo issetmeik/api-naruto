@@ -5,7 +5,7 @@ import {
   httpPatch,
   httpPost,
 } from 'inversify-express-utils';
-import { DBService } from '../database/db.service';
+import { DBService } from '../../database/db.service';
 import { CreateSubscriberDto, SubscriberDto } from '../dtos';
 import { SubscribersService } from '../services/subscriber.service';
 

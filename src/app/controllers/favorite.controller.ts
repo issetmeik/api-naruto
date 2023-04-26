@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { FavoriteService } from '../services/favorite.service';
-import { authMiddleware } from '../middlewares/auth';
+import { authMiddleware } from '../../middlewares/auth';
 import { FavoriteTypes } from '@prisma/client';
 import {
   CreateFavoriteDto,

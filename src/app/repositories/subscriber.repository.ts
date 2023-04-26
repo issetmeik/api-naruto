@@ -1,6 +1,6 @@
 import { PrismaClient, Subscriber } from '@prisma/client';
 import { injectable } from 'inversify';
-import { DBService } from '../database/db.service';
+import { DBService } from '../../database/db.service';
 import { CreateSubscriberDto, SubscriberFindOneDto } from '../dtos';
 import { ISubscriber } from '../interfaces/subscriber-interface';
 

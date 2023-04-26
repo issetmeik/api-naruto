@@ -1,14 +1,13 @@
-import 'dotenv/config'
-import 'reflect-metadata'
-import { App } from './app'
+import 'dotenv/config';
+import 'reflect-metadata';
+import { App } from './app';
 
+import './app/controllers/subscriber.controller';
 
-import './controllers/subscriber.controller'
-
-console.clear()
+console.clear();
 
 export async function bootstrap() {
- new App().setup()
+  new App().setup();
 }
 
-bootstrap()
+bootstrap();
