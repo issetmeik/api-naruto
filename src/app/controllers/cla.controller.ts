@@ -17,4 +17,10 @@ export class ClaController {
     const clas = await this._service.findMany();
     res.status(201).json({ data: clas });
   }
+
+  @httpGet('/:id')
+  async getOne(req: Request, res: Response) {
+    const clas = await this._service.findOne({ id: req.params.id });
+    res.status(201).json({ data: clas });
+  }
 }

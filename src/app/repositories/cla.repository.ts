@@ -23,6 +23,9 @@ export class ClaRepository {
       where: {
         id: entity,
       },
+      include: {
+        Character: true,
+      },
     });
   }
 
