@@ -8,6 +8,12 @@ import {
 import { IUser } from '../interfaces/user-interface';
 import { UserRepository } from '../repositories/user.repository';
 import * as bcrypt from 'bcryptjs';
+import { createUserSchema } from '../dtos';
+import {
+  ApiError,
+  BadRequestError,
+  NotFoundError,
+} from '../../shared/errors/api-errors';
 
 @injectable()
 export class UserService {
@@ -27,7 +33,7 @@ export class UserService {
 
   async findByEmail(user: UserFindByEmailDto): Promise<UserDto> {
     const foundUser = await this._userRepo.findByEmail(user.email);
-    if (!foundUser) throw new Error('User not found');
+    if (!foundUser) throw new NotFoundError('User not found');
 
     return UserDto.from(foundUser);
   }

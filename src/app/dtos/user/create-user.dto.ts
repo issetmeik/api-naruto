@@ -18,7 +18,6 @@ export class CreateUserDto {
     if (!body.avatar) throw new Error('Missing porperty avatar');
     if (!body.birthDate) throw new Error('Missing porperty birthDate');
     if (!body.password) throw new Error('Missing porperty password');
-
     return new CreateUserDto(
       body.name,
       body.email,

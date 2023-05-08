@@ -3,6 +3,9 @@ import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
 import { authMiddleware } from '../../middlewares/auth';
 import { FavoriteService } from '../services/favorite.service';
+import { createUserSchema } from '../dtos';
+import * as Yup from 'yup';
+import { ApiError, BadRequestError } from '../../shared/errors/api-errors';
 
 @controller('/user')
 export class UserController {
@@ -13,6 +16,17 @@ export class UserController {
 
   @httpPost('/')
   async store(req: Request, res: Response) {
+    const { name, email, password, avatar, birthDate, externalId } = req.body;
+
+    await createUserSchema.validate({
+      name,
+      email,
+      password,
+      avatar,
+      birthDate,
+      externalId,
+    });
+
     const newUser = await this._service.create(req.body);
     res.status(201).json({ data: newUser });
   }
