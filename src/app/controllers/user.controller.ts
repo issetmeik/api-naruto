@@ -16,19 +16,27 @@ export class UserController {
 
   @httpPost('/')
   async store(req: Request, res: Response) {
-    const { name, email, password, avatar, birthDate, externalId } = req.body;
+    try {
+      const { name, email, password, avatar, birthDate, externalId } = req.body;
 
-    await createUserSchema.validate({
-      name,
-      email,
-      password,
-      avatar,
-      birthDate,
-      externalId,
-    });
+      await createUserSchema.validate({
+        name,
+        email,
+        password,
+        avatar,
+        birthDate,
+        externalId,
+      });
 
-    const newUser = await this._service.create(req.body);
-    res.status(201).json({ data: newUser });
+      const newUser = await this._service.create(req.body);
+      res.status(201).json({ data: newUser });
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        throw new BadRequestError(error.message);
+      }
+
+      throw new ApiError('Internal Server Error', 500);
+    }
   }
 
   @httpGet('/:id', authMiddleware)
