@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Cla" ALTER COLUMN "icon" DROP NOT NULL;

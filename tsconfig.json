@@ -12,6 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "strictNullChecks": true,
-    "allowJs": false,
-  },
+    "allowJs": false
+  }
 }
