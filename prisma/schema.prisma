@@ -48,17 +48,18 @@ model Character {
   claId         String?
   name          String
   about         String
+  images        String
   gender        GenderType @default(UNDEFINED)
-  birthDate     DateTime
-  age           String
-  height        String
-  weight        String
-  bloodType     String
-  occupation    String
-  afiliation    String
-  partner       String
-  ninjaRank     String
-  ninjaRegister String
+  birthDate     DateTime?
+  age           String?
+  height        String?
+  weight        String?
+  bloodType     String?
+  occupation    String?
+  afiliation    String?
+  partner       String?
+  ninjaRank     String?
+  ninjaRegister String?
   page          String
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt

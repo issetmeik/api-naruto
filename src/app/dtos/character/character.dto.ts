@@ -7,20 +7,21 @@ export class CharacterDto {
     public readonly name: string,
     public readonly externalId: string,
     public readonly about: string,
-    public readonly gender: GenderType,
-    public readonly birthDate: Date,
-    public readonly age: string,
-    public readonly height: string,
-    public readonly weight: string,
-    public readonly bloodType: string,
-    public readonly occupation: string,
-    public readonly afiliation: string,
-    public readonly partner: string,
-    public readonly ninjaRank: string,
-    public readonly ninjaRegister: string,
     public readonly page: string,
+    public readonly gender: GenderType,
+    public readonly images: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly age?: string | undefined | null,
+    public readonly height?: string | undefined | null,
+    public readonly weight?: string | undefined | null,
+    public readonly bloodType?: string | undefined | null,
+    public readonly occupation?: string | undefined | null,
+    public readonly afiliation?: string | undefined | null,
+    public readonly partner?: string | undefined | null,
+    public readonly ninjaRank?: string | undefined | null,
+    public readonly ninjaRegister?: string | undefined | null,
+    public readonly birthDate?: Date | undefined | null,
     public readonly cla?: ICla
   ) {}
 
@@ -29,18 +30,9 @@ export class CharacterDto {
     if (!body.name) throw new Error('Missing porperty name');
     if (!body.externalId) throw new Error('Missing porperty externalId');
     if (!body.about) throw new Error('Missing porperty about');
-    if (!body.gender) throw new Error('Missing porperty gender');
-    if (!body.birthDate) throw new Error('Missing porperty birthDate');
-    if (!body.age) throw new Error('Missing porperty age');
-    if (!body.height) throw new Error('Missing porperty height');
-    if (!body.weight) throw new Error('Missing porperty weight');
-    if (!body.bloodType) throw new Error('Missing porperty bloodType');
-    if (!body.occupation) throw new Error('Missing porperty occupation');
-    if (!body.afiliation) throw new Error('Missing porperty afiliation');
-    if (!body.partner) throw new Error('Missing porperty partner');
-    if (!body.ninjaRank) throw new Error('Missing porperty ninjaRank');
-    if (!body.ninjaRegister) throw new Error('Missing porperty ninjaRegister');
     if (!body.page) throw new Error('Missing porperty page');
+    if (!body.gender) throw new Error('Missing porperty gender');
+    if (!body.images) throw new Error('Missing porperty images');
     if (!body.createdAt) throw new Error('Missing porperty createdAt');
     if (!body.updatedAt) throw new Error('Missing porperty updatedAt');
 
@@ -49,8 +41,11 @@ export class CharacterDto {
       body.name,
       body.externalId,
       body.about,
+      body.page,
       body.gender,
-      body.birthDate,
+      body.images,
+      body.createdAt,
+      body.updatedAt,
       body.age,
       body.height,
       body.weight,
@@ -60,9 +55,7 @@ export class CharacterDto {
       body.partner,
       body.ninjaRank,
       body.ninjaRegister,
-      body.page,
-      body.createdAt,
-      body.updatedAt,
+      body.birthDate,
       body.cla
     );
   }

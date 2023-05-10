@@ -36,10 +36,7 @@ export class CharacterRepository {
   async find(dto: CharacterFindManyDto): Promise<Array<ICharacter>> {
     return await this._db.character.findMany({
       skip: (dto.page - 1) * dto.pageSize,
-      take: dto.paginate ? dto.pageSize : undefined,
-      orderBy: {
-        [`${dto.orderBy}`]: dto.orderDescending ? 'desc' : 'asc',
-      },
+      take: dto.pageSize ? dto.pageSize : 10,
       where: {
         name: { contains: dto.name },
         externalId: { contains: dto.externalId },
