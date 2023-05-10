@@ -10,6 +10,7 @@ export * from './session/token.dto';
 export * from './cla/create-cla.dto';
 export * from './cla/findone-cla.dto';
 export * from './cla/cla.dto';
+export * from './cla/findmany-cla.dto';
 export * from './character/create-character.dto';
 export * from './character/findone-character.dto';
 export * from './character/character.dto';

@@ -24,7 +24,6 @@ export class CharacterService {
   }
 
   async findMany(dto: CharacterFindManyDto): Promise<Array<ICharacter>> {
-    console.log(dto);
     const characters = await this._characterRepo.find(dto);
     if (!characters) throw new Error('characters not found');
     return CharacterDto.fromMany(characters);

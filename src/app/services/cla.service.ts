@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { ClaDto, ClaFindOneDto, CreateClaDto } from '../dtos';
+import { ClaDto, ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
 import { ICla } from '../interfaces/cla-interface';
 import { ClaRepository } from '../repositories/cla.repository';
 
@@ -19,8 +19,8 @@ export class ClaService {
     return ClaDto.from(foundCla);
   }
 
-  async findMany(): Promise<Array<ICla>> {
-    const clas = await this._claRepo.find();
+  async findMany(dto: ClaFindManyDto): Promise<Array<ICla>> {
+    const clas = await this._claRepo.find(dto);
     if (!clas) throw new Error('clas not found');
     return ClaDto.fromMany(clas);
   }

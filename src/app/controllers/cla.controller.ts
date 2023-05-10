@@ -14,7 +14,7 @@ export class ClaController {
 
   @httpGet('/all')
   async index(req: Request, res: Response) {
-    const clas = await this._service.findMany();
+    const clas = await this._service.findMany(req.body);
     res.status(201).json({ data: clas });
   }
 
