@@ -19,6 +19,7 @@ export interface ICharacter {
   partner?: string | null;
   ninjaRank?: string | null;
   ninjaRegister?: string | null;
+  claId?: string | null;
 
   createdAt: Date;
   updatedAt: Date;

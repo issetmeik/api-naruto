@@ -1,3 +1,6 @@
+import { stringToNumber } from '../../../utils/stringToNumber.utils';
+import { ValidationException } from '../../exceptions';
+
 export class FavoriteFindManyDto {
   constructor(
     public page: number,
@@ -6,9 +9,13 @@ export class FavoriteFindManyDto {
   ) {}
 
   static from(body: Partial<FavoriteFindManyDto>) {
-    if (!body.userId) throw new Error('Missing porperty userId');
-    if (!body.pageSize) throw new Error('Missing porperty pageSize');
-    if (!body.page) throw new Error('Missing porperty page');
+    if (!body.userId) throw new ValidationException('Missing porperty userId');
+    if (!body.page) throw new ValidationException('Missing porperty page');
+    if (!body.pageSize)
+      throw new ValidationException('Missing porperty pageSize');
+
+    body.page = stringToNumber(body.page, 1, 'page');
+    body.pageSize = stringToNumber(body.pageSize, 1, 'pageSize');
 
     return new FavoriteFindManyDto(body.page, body.pageSize, body.userId);
   }

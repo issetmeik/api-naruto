@@ -7,6 +7,7 @@ import {
 } from '../dtos';
 import { ICharacter } from '../interfaces/character-interface';
 import { CharacterRepository } from '../repositories/character.repository';
+import { HttpException } from '../exceptions';
 
 @injectable()
 export class CharacterService {
@@ -19,7 +20,7 @@ export class CharacterService {
 
   async findOne(dto: CharacterFindOneDto): Promise<ICharacter> {
     const foundCharacter = await this._characterRepo.findOne(dto);
-    if (!foundCharacter) throw new Error('character not found');
+    if (!foundCharacter) throw new HttpException('character not found', 404);
     return CharacterDto.from(foundCharacter);
   }
 

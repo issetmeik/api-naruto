@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { injectable } from 'inversify';
-import { ClaFindManyDto, CreateClaDto } from '../dtos';
+import { ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
 import { ICla } from '../interfaces/cla-interface';
 
 @injectable()
@@ -18,10 +18,10 @@ export class ClaRepository {
     });
   }
 
-  async findOne(entity: string): Promise<ICla | null> {
+  async findOne(dto: ClaFindOneDto): Promise<ICla | null> {
     return this._db.cla.findFirst({
       where: {
-        id: entity,
+        id: dto.id,
       },
       include: {
         Character: true,
@@ -34,8 +34,8 @@ export class ClaRepository {
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.pageSize ? dto.pageSize : 10,
       where: {
-        name: { contains: dto.name },
-        externalId: { contains: dto.externalId },
+        name: { contains: dto.name ? dto.name : undefined },
+        externalId: { contains: dto.externalId ? dto.externalId : undefined },
       },
     });
   }

@@ -1,4 +1,5 @@
 import { FavoriteTypes } from '@prisma/client';
+import { ValidationException } from '../../exceptions';
 
 export class CreateFavoriteDto {
   constructor(
@@ -8,9 +9,9 @@ export class CreateFavoriteDto {
   ) {}
 
   static from(body: Partial<CreateFavoriteDto>) {
-    if (!body.type) throw new Error('Missing porperty type');
-    if (!body.userId) throw new Error('Missing porperty userId');
-    if (!body.id) throw new Error('Missing porperty id');
+    if (!body.type) throw new ValidationException('Missing porperty type');
+    if (!body.userId) throw new ValidationException('Missing porperty userId');
+    if (!body.id) throw new ValidationException('Missing porperty id');
 
     return new CreateFavoriteDto(body.type, body.userId, body.id);
   }

@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-import { DBService } from '../database/db.service';
 import { SubscribersController } from '../app/controllers/subscriber.controller';
 import { SubscribersRepository } from '../app/repositories/subscriber.repository';
 import { SubscribersService } from '../app/services/subscriber.service';
@@ -22,7 +21,6 @@ export const container = new Container({
   defaultScope: 'Singleton',
 });
 
-container.bind(DBService).toSelf();
 container.bind(SubscribersRepository).toSelf();
 container.bind(SubscribersController).toSelf();
 container.bind(SubscribersService).toSelf();

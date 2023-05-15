@@ -1,54 +1,56 @@
 import { Request, Response } from 'express';
-import { controller, httpGet, httpPost } from 'inversify-express-utils';
+import {
+  controller,
+  httpDelete,
+  httpGet,
+  httpPost,
+} from 'inversify-express-utils';
 import { FavoriteService } from '../services/favorite.service';
-import { authMiddleware } from '../../middlewares/auth';
+import { authMiddleware } from '../../lib/middlewares/auth';
 import { FavoriteTypes } from '@prisma/client';
 import {
   CreateFavoriteDto,
-  FavoriteDeleteDto,
+  DeleteFavoriteDto,
   FavoriteFindManyDto,
 } from '../dtos';
 import { UserService } from '../services/user.service';
+import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
+import { BaseHttpResponse } from '../../lib/base-http-response';
 
-@controller('/favorite')
+@controller('/favorites')
 export class FavoriteController {
   constructor(
     private readonly _service: FavoriteService,
     private readonly _userService: UserService
   ) {}
 
-  @httpPost('/:id', authMiddleware)
+  @httpPost(
+    '/:id',
+    authMiddleware,
+    ValidateRequest.withParams(CreateFavoriteDto)
+  )
   async store(req: Request, res: Response) {
-    const dto: CreateFavoriteDto = {
-      userId: req.body.auth.userId,
-      type: req.body.type,
-      id: req.params.id,
-    };
-
-    const newFavorite = await this._service.create(dto);
-    res.status(201).json({ data: newFavorite });
+    //TODO: Adicionar tratativa para nao permitir criar favoritos iguais para o mesmo usuario
+    const favorite = await this._service.create(req.body);
+    const response = BaseHttpResponse.success(favorite, 201);
+    res.status(response.statusCode).json(response);
   }
 
-  @httpGet('/', authMiddleware)
+  @httpGet('/', authMiddleware, ValidateRequest.withQuery(FavoriteFindManyDto))
   async getFavorites(req: Request, res: Response) {
-    const dto: FavoriteFindManyDto = {
-      page: req.body.page,
-      pageSize: req.body.pageSize,
-      userId: req.body.auth.userId,
-    };
-
-    const favorites = await this._service.findMany(dto);
-    res.status(200).json({ data: favorites });
+    const favorites = await this._service.findMany(req.body);
+    const response = BaseHttpResponse.success(favorites);
+    res.json(response);
   }
 
-  @httpPost('/delete/:id', authMiddleware)
+  @httpDelete(
+    '/:id',
+    authMiddleware,
+    ValidateRequest.withParams(DeleteFavoriteDto)
+  )
   async delete(req: Request, res: Response) {
-    const dto: FavoriteDeleteDto = {
-      id: req.params.id,
-      userId: req.body.auth.userId,
-    };
-    await this._service.delete(dto);
-
-    res.status(200);
+    const favorite = await this._service.delete(req.body);
+    const response = BaseHttpResponse.success(favorite);
+    res.json(response);
   }
 }

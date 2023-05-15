@@ -1,3 +1,5 @@
+import { ValidationException } from '../../exceptions';
+
 export class CreateSubscriberDto {
   constructor(
     public readonly name: string,
@@ -6,11 +8,11 @@ export class CreateSubscriberDto {
 
   static from(body: Partial<CreateSubscriberDto>) {
     if (!body.subscribedToChannel) {
-      throw new Error('Missing property channel');
+      throw new ValidationException('Missing property channel');
     }
 
     if (!body.name) {
-      throw new Error('Missing property name');
+      throw new ValidationException('Missing property name');
     }
 
     return new CreateSubscriberDto(body.name, body.subscribedToChannel);

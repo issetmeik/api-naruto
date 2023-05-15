@@ -1,16 +1,37 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import 'express-async-errors';
 import { InversifyExpressServer } from 'inversify-express-utils';
-import { DBService } from './database/db.service';
 import { container } from './config/di-container';
-import { errorHandler } from './middlewares/globalErrorHandler';
+import { ValidationException, HttpException } from './app/exceptions';
+import { BaseHttpResponse } from './lib/base-http-response';
+import { Application } from './lib/abstract-application';
 
 export class App {
   async setup() {
-    const _db = container.get(DBService);
     const server = new InversifyExpressServer(container);
+    server.setErrorConfig((app) => {
+      app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+        if (err instanceof ValidationException) {
+          const response = BaseHttpResponse.failed(err.message);
+          res.status(response.statusCode).json(response);
+          next();
+        }
+
+        if (err instanceof HttpException) {
+          const response = BaseHttpResponse.failed(err.message, err.statusCode);
+          res.status(response.statusCode).json(response);
+          next();
+        }
+
+        if (err instanceof Error) {
+          const response = BaseHttpResponse.failed(err.message, 500);
+          res.status(response.statusCode).json(response);
+        }
+      });
+    });
+
     server.setConfig((app) => {
       app.use(express.json());
-      app.use('*', errorHandler);
     });
 
     const app = server.build();

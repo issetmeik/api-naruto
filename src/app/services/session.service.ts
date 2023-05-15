@@ -3,6 +3,7 @@ import { CreateTokenDto, TokenDto } from '../dtos';
 import * as Jwt from 'jsonwebtoken';
 import config from '../../config/auth';
 import { UserService } from './user.service';
+import { HttpException } from '../exceptions';
 
 @injectable()
 export class SessionService {
@@ -14,7 +15,7 @@ export class SessionService {
     const { id, name } = user;
 
     if (!(await this.userService.checkPassword(password, user.password))) {
-      throw new Error('wrong password');
+      throw new HttpException('Wrong password', 400);
     }
 
     const token = Jwt.sign({ id }, config.secret, {

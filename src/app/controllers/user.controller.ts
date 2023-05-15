@@ -1,11 +1,11 @@
 import { Response, Request } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
-import { authMiddleware } from '../../middlewares/auth';
+import { authMiddleware } from '../../lib/middlewares/auth';
 import { FavoriteService } from '../services/favorite.service';
-import { createUserSchema } from '../dtos';
-import * as Yup from 'yup';
-import { ApiError, BadRequestError } from '../../shared/errors/api-errors';
+import { CreateUserDto, UserFindOneDto } from '../dtos';
+import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
+import { BaseHttpResponse } from '../../lib/base-http-response';
 
 @controller('/user')
 export class UserController {
@@ -14,35 +14,17 @@ export class UserController {
     private readonly _favoriteService: FavoriteService
   ) {}
 
-  @httpPost('/')
+  @httpPost('/', ValidateRequest.with(CreateUserDto))
   async store(req: Request, res: Response) {
-    try {
-      const { name, email, password, avatar, birthDate, externalId } = req.body;
-
-      await createUserSchema.validate({
-        name,
-        email,
-        password,
-        avatar,
-        birthDate,
-        externalId,
-      });
-
-      const newUser = await this._service.create(req.body);
-      res.status(201).json({ data: newUser });
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        throw new BadRequestError(error.message);
-      }
-
-      throw new ApiError('Internal Server Error', 500);
-    }
+    const user = await this._service.create(req.body);
+    const response = BaseHttpResponse.success(user, 201);
+    res.status(response.statusCode).json(response);
   }
 
-  @httpGet('/:id', authMiddleware)
+  @httpGet('/:id', ValidateRequest.withParams(UserFindOneDto))
   async getOne(req: Request, res: Response) {
-    const id = req.params.id;
-    const findUser = await this._service.findOne({ id });
-    res.status(200).json({ data: findUser });
+    const user = await this._service.findOne(req.body);
+    const response = BaseHttpResponse.success(user, 200);
+    res.status(response.statusCode).json(response);
   }
 }

@@ -1,26 +1,32 @@
 import { ClaService } from '../services/cla.service';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
+import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
+import { ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
+import { BaseHttpResponse } from '../../lib/base-http-response';
 
 @controller('/cla')
 export class ClaController {
   constructor(private readonly _service: ClaService) {}
 
-  @httpPost('/')
+  @httpPost('/', ValidateRequest.with(CreateClaDto))
   async store(req: Request, res: Response) {
-    const newCla = await this._service.create(req.body);
-    res.status(201).json({ data: newCla });
+    const cla = await this._service.create(req.body);
+    const response = BaseHttpResponse.success(cla, 201);
+    res.status(201).json(response);
   }
 
-  @httpGet('/all')
+  @httpGet('/', ValidateRequest.withQuery(ClaFindManyDto))
   async index(req: Request, res: Response) {
     const clas = await this._service.findMany(req.body);
-    res.status(201).json({ data: clas });
+    const response = BaseHttpResponse.success(clas);
+    res.json(response);
   }
 
-  @httpGet('/:id')
+  @httpGet('/:id', ValidateRequest.withParams(ClaFindOneDto))
   async getOne(req: Request, res: Response) {
-    const clas = await this._service.findOne({ id: req.params.id });
-    res.status(201).json({ data: clas });
+    const cla = await this._service.findOne(req.body);
+    const response = BaseHttpResponse.success(cla);
+    res.json(response);
   }
 }

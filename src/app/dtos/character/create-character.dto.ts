@@ -1,4 +1,5 @@
 import { GenderType } from '@prisma/client';
+import { ValidationException } from '../../exceptions';
 
 export class CreateCharacterDto {
   constructor(
@@ -8,26 +9,27 @@ export class CreateCharacterDto {
     public readonly page: string,
     public readonly gender: GenderType,
     public readonly images: string,
-    public readonly age?: string | undefined,
-    public readonly height?: string | undefined,
-    public readonly weight?: string | undefined,
-    public readonly bloodType?: string | undefined,
-    public readonly occupation?: string | undefined,
-    public readonly afiliation?: string | undefined,
-    public readonly partner?: string | undefined,
-    public readonly ninjaRank?: string | undefined,
-    public readonly ninjaRegister?: string | undefined,
-    public readonly birthDate?: Date | undefined,
-    public readonly claId?: string | undefined
+    public readonly age?: string,
+    public readonly height?: string,
+    public readonly weight?: string,
+    public readonly bloodType?: string,
+    public readonly occupation?: string,
+    public readonly afiliation?: string,
+    public readonly partner?: string,
+    public readonly ninjaRank?: string,
+    public readonly ninjaRegister?: string,
+    public readonly birthDate?: Date,
+    public readonly claId?: string
   ) {}
 
   static from(body: Partial<CreateCharacterDto>) {
-    if (!body.name) throw new Error('Missing porperty name');
-    if (!body.externalId) throw new Error('Missing porperty externalId');
-    if (!body.about) throw new Error('Missing porperty about');
-    if (!body.page) throw new Error('Missing porperty page');
-    if (!body.gender) throw new Error('Missing porperty gender');
-    if (!body.images) throw new Error('Missing porperty images');
+    if (!body.name) throw new ValidationException('Missing porperty name');
+    if (!body.externalId)
+      throw new ValidationException('Missing porperty externalId');
+    if (!body.about) throw new ValidationException('Missing porperty about');
+    if (!body.page) throw new ValidationException('Missing porperty page');
+    if (!body.gender) throw new ValidationException('Missing porperty gender');
+    if (!body.images) throw new ValidationException('Missing porperty images');
 
     return new CreateCharacterDto(
       body.name,

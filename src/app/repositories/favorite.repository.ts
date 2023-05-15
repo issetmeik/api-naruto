@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 import { IFavorite } from '../interfaces/favorites-interface';
 import {
   CreateFavoriteDto,
-  FavoriteDeleteDto,
+  DeleteFavoriteDto,
   FavoriteFindManyDto,
 } from '../dtos';
 
@@ -36,18 +36,15 @@ export class FavoriteRepository {
   async find(dto: FavoriteFindManyDto): Promise<Array<IFavorite>> {
     return await this._db.favorite.findMany({
       skip: (dto.page - 1) * dto.pageSize,
-      take: dto.pageSize,
+      take: dto.pageSize ? dto.pageSize : 10,
       where: {
         userId: dto.userId,
       },
-      include: {
-        character: true,
-        cla: true,
-      },
+      include: { cla: true, character: true },
     });
   }
 
-  async delete(dto: FavoriteDeleteDto): Promise<void> {
+  async delete(dto: DeleteFavoriteDto): Promise<void> {
     await this._db.favorite.delete({
       where: {
         id: dto.id,

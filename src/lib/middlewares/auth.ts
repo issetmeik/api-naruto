@@ -1,7 +1,8 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import config from '../config/auth';
+import config from '../../config/auth';
 import { Response, Request, NextFunction } from 'express';
-import { IAuth } from '../app/interfaces/user-interface';
+import { IAuth } from '../../app/interfaces/user-interface';
+import { HttpException } from '../../app/exceptions';
 
 interface DecodedToken extends JwtPayload {
   id: string;
@@ -15,20 +16,15 @@ export function authMiddleware(
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Token not found' });
+    throw new HttpException('Token not found', 401);
   }
 
   try {
     const decodedToken = jwt.verify(token, config.secret) as DecodedToken;
 
-    const auth: IAuth = {
-      token: token,
-      userId: decodedToken.id,
-    };
-
-    req.body.auth = auth;
+    req.body.userId = decodedToken.id;
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid token' });
+    throw new HttpException('Invalid token', 401);
   }
 }
