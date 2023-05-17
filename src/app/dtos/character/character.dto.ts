@@ -1,5 +1,6 @@
 import { GenderType } from '@prisma/client';
 import { ICla } from '../../interfaces/cla-interface';
+import { ValidationException } from '../../exceptions';
 
 export class CharacterDto {
   constructor(
@@ -26,15 +27,18 @@ export class CharacterDto {
   ) {}
 
   static from(body: Partial<CharacterDto>) {
-    if (!body.id) throw new Error('Missing porperty id');
-    if (!body.name) throw new Error('Missing porperty name');
-    if (!body.externalId) throw new Error('Missing porperty externalId');
-    if (!body.about) throw new Error('Missing porperty about');
-    if (!body.page) throw new Error('Missing porperty page');
-    if (!body.gender) throw new Error('Missing porperty gender');
-    if (!body.images) throw new Error('Missing porperty images');
-    if (!body.createdAt) throw new Error('Missing porperty createdAt');
-    if (!body.updatedAt) throw new Error('Missing porperty updatedAt');
+    if (!body.id) throw new ValidationException('Missing porperty id');
+    if (!body.name) throw new ValidationException('Missing porperty name');
+    if (!body.externalId)
+      throw new ValidationException('Missing porperty externalId');
+    if (!body.about) throw new ValidationException('Missing porperty about');
+    if (!body.page) throw new ValidationException('Missing porperty page');
+    if (!body.gender) throw new ValidationException('Missing porperty gender');
+    if (!body.images) throw new ValidationException('Missing porperty images');
+    if (!body.createdAt)
+      throw new ValidationException('Missing porperty createdAt');
+    if (!body.updatedAt)
+      throw new ValidationException('Missing porperty updatedAt');
 
     return new CharacterDto(
       body.id,

@@ -17,7 +17,7 @@ import { UserService } from '../services/user.service';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
 import { BaseHttpResponse } from '../../lib/base-http-response';
 
-@controller('/favorites')
+@controller('/favorite')
 export class FavoriteController {
   constructor(
     private readonly _service: FavoriteService,

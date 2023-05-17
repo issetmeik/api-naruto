@@ -1,7 +1,4 @@
 import { Container } from 'inversify';
-import { SubscribersController } from '../app/controllers/subscriber.controller';
-import { SubscribersRepository } from '../app/repositories/subscriber.repository';
-import { SubscribersService } from '../app/services/subscriber.service';
 import { UserRepository } from '../app/repositories/user.repository';
 import { UserController } from '../app/controllers/user.controller';
 import { UserService } from '../app/services/user.service';
@@ -21,9 +18,6 @@ export const container = new Container({
   defaultScope: 'Singleton',
 });
 
-container.bind(SubscribersRepository).toSelf();
-container.bind(SubscribersController).toSelf();
-container.bind(SubscribersService).toSelf();
 container.bind(UserRepository).toSelf();
 container.bind(UserController).toSelf();
 container.bind(UserService).toSelf();

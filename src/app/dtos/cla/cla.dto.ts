@@ -1,3 +1,4 @@
+import { ValidationException } from '../../exceptions';
 import { ICharacter } from '../../interfaces/character-interface';
 
 export class ClaDto {
@@ -13,12 +14,15 @@ export class ClaDto {
   ) {}
 
   static from(body: Partial<ClaDto>) {
-    if (!body.id) throw new Error('Missing porperty id');
-    if (!body.name) throw new Error('Missing porperty name');
-    if (!body.link) throw new Error('Missing porperty link');
-    if (!body.createdAt) throw new Error('Missing porperty createdAt');
-    if (!body.updatedAt) throw new Error('Missing porperty updatedAt');
-    if (!body.externalId) throw new Error('Missing porperty externalId');
+    if (!body.id) throw new ValidationException('Missing porperty id');
+    if (!body.name) throw new ValidationException('Missing porperty name');
+    if (!body.link) throw new ValidationException('Missing porperty link');
+    if (!body.createdAt)
+      throw new ValidationException('Missing porperty createdAt');
+    if (!body.updatedAt)
+      throw new ValidationException('Missing porperty updatedAt');
+    if (!body.externalId)
+      throw new ValidationException('Missing porperty externalId');
 
     return new ClaDto(
       body.id,

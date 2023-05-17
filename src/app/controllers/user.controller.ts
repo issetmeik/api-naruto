@@ -9,10 +9,7 @@ import { BaseHttpResponse } from '../../lib/base-http-response';
 
 @controller('/user')
 export class UserController {
-  constructor(
-    private readonly _service: UserService,
-    private readonly _favoriteService: FavoriteService
-  ) {}
+  constructor(private readonly _service: UserService) {}
 
   @httpPost('/', ValidateRequest.with(CreateUserDto))
   async store(req: Request, res: Response) {
@@ -21,7 +18,7 @@ export class UserController {
     res.status(response.statusCode).json(response);
   }
 
-  @httpGet('/:id', ValidateRequest.withParams(UserFindOneDto))
+  @httpGet('/:id', authMiddleware, ValidateRequest.withParams(UserFindOneDto))
   async getOne(req: Request, res: Response) {
     const user = await this._service.findOne(req.body);
     const response = BaseHttpResponse.success(user, 200);

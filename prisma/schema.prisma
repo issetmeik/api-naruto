@@ -60,6 +60,7 @@ model Character {
   partner       String?
   ninjaRank     String?
   ninjaRegister String?
+  alive         Boolean @default(true)
   page          String
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
