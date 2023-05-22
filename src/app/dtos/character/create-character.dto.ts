@@ -19,7 +19,8 @@ export class CreateCharacterDto {
     public readonly ninjaRank?: string,
     public readonly ninjaRegister?: string,
     public readonly birthDate?: Date,
-    public readonly claId?: string
+    public readonly claId?: string,
+    public readonly alive?: boolean
   ) {}
 
   static from(body: Partial<CreateCharacterDto>) {
@@ -48,7 +49,8 @@ export class CreateCharacterDto {
       body.ninjaRank,
       body.ninjaRegister,
       body.birthDate,
-      body.claId
+      body.claId,
+      body.alive
     );
   }
 }

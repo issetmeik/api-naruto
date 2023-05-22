@@ -13,6 +13,7 @@ export class CharacterDto {
     public readonly images: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly alive: boolean,
     public readonly age?: string | undefined | null,
     public readonly height?: string | undefined | null,
     public readonly weight?: string | undefined | null,
@@ -39,6 +40,7 @@ export class CharacterDto {
       throw new ValidationException('Missing porperty createdAt');
     if (!body.updatedAt)
       throw new ValidationException('Missing porperty updatedAt');
+    if (!body.alive) throw new ValidationException('Missing porperty alive');
 
     return new CharacterDto(
       body.id,
@@ -50,6 +52,7 @@ export class CharacterDto {
       body.images,
       body.createdAt,
       body.updatedAt,
+      body.alive,
       body.age,
       body.height,
       body.weight,

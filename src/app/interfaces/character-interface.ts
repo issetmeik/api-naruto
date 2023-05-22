@@ -9,6 +9,7 @@ export interface ICharacter {
   page: string;
   gender: GenderType;
   images: string;
+  alive: boolean;
   birthDate?: Date | null;
   age?: string | null;
   height?: string | null;
