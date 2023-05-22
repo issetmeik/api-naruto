@@ -9,6 +9,7 @@ export class CreateCharacterDto {
     public readonly page: string,
     public readonly gender: GenderType,
     public readonly images: string,
+    public readonly alive: boolean,
     public readonly age?: string,
     public readonly height?: string,
     public readonly weight?: string,
@@ -19,8 +20,7 @@ export class CreateCharacterDto {
     public readonly ninjaRank?: string,
     public readonly ninjaRegister?: string,
     public readonly birthDate?: Date,
-    public readonly claId?: string,
-    public readonly alive?: boolean
+    public readonly claId?: string
   ) {}
 
   static from(body: Partial<CreateCharacterDto>) {
@@ -31,7 +31,7 @@ export class CreateCharacterDto {
     if (!body.page) throw new ValidationException('Missing porperty page');
     if (!body.gender) throw new ValidationException('Missing porperty gender');
     if (!body.images) throw new ValidationException('Missing porperty images');
-
+    if (!body.alive) throw new ValidationException('Missing porperty alive');
     return new CreateCharacterDto(
       body.name,
       body.externalId,
@@ -39,6 +39,7 @@ export class CreateCharacterDto {
       body.page,
       body.gender,
       body.images,
+      body.alive,
       body.age,
       body.height,
       body.weight,
@@ -49,8 +50,7 @@ export class CreateCharacterDto {
       body.ninjaRank,
       body.ninjaRegister,
       body.birthDate,
-      body.claId,
-      body.alive
+      body.claId
     );
   }
 }
