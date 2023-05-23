@@ -37,6 +37,12 @@ export class CharacterRepository {
     return await this._db.character.findMany({
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.pageSize ? dto.pageSize : 10,
+      where: {
+        alive: dto.alive,
+        gender: dto.gender,
+        name: { contains: dto.name ? dto.name : undefined },
+        claId: dto.claId,
+      },
     });
   }
 }

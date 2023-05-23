@@ -1,13 +1,13 @@
 import { ValidationException } from '../../exceptions';
 import { stringToNumber } from '../../../utils/stringToNumber.utils';
 import { GenderType } from '@prisma/client';
-//TODO: Verificar por quais partes iremos filtrar os personagens nos requisitos pedidos
+
 export class CharacterFindManyDto {
   constructor(
     public page: number,
     public pageSize: number,
     public readonly alive?: string,
-    public readonly sex?: GenderType,
+    public readonly gender?: GenderType,
     public readonly name?: string,
     public readonly claId?: string
   ) {}
@@ -24,7 +24,7 @@ export class CharacterFindManyDto {
       body.page,
       body.pageSize,
       body.alive,
-      body.sex,
+      body.gender,
       body.name,
       body.claId
     );
