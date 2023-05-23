@@ -10,16 +10,6 @@ export class CreateCharacterDto {
     public readonly gender: GenderType,
     public readonly images: string,
     public readonly alive: boolean,
-    public readonly age?: string,
-    public readonly height?: string,
-    public readonly weight?: string,
-    public readonly bloodType?: string,
-    public readonly occupation?: string,
-    public readonly afiliation?: string,
-    public readonly partner?: string,
-    public readonly ninjaRank?: string,
-    public readonly ninjaRegister?: string,
-    public readonly birthDate?: Date,
     public readonly claId?: string
   ) {}
 
@@ -40,16 +30,6 @@ export class CreateCharacterDto {
       body.gender,
       body.images,
       body.alive,
-      body.age,
-      body.height,
-      body.weight,
-      body.bloodType,
-      body.occupation,
-      body.afiliation,
-      body.partner,
-      body.ninjaRank,
-      body.ninjaRegister,
-      body.birthDate,
       body.claId
     );
   }

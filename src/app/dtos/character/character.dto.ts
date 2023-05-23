@@ -14,16 +14,6 @@ export class CharacterDto {
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly alive: boolean,
-    public readonly age?: string | undefined | null,
-    public readonly height?: string | undefined | null,
-    public readonly weight?: string | undefined | null,
-    public readonly bloodType?: string | undefined | null,
-    public readonly occupation?: string | undefined | null,
-    public readonly afiliation?: string | undefined | null,
-    public readonly partner?: string | undefined | null,
-    public readonly ninjaRank?: string | undefined | null,
-    public readonly ninjaRegister?: string | undefined | null,
-    public readonly birthDate?: Date | undefined | null,
     public readonly cla?: ICla
   ) {}
 
@@ -53,16 +43,6 @@ export class CharacterDto {
       body.createdAt,
       body.updatedAt,
       body.alive,
-      body.age,
-      body.height,
-      body.weight,
-      body.bloodType,
-      body.occupation,
-      body.afiliation,
-      body.partner,
-      body.ninjaRank,
-      body.ninjaRegister,
-      body.birthDate,
       body.cla
     );
   }
