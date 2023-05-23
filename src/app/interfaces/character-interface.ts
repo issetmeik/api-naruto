@@ -9,7 +9,7 @@ export interface ICharacter {
   page: string;
   gender: GenderType;
   images: string;
-  alive: boolean;
+  alive: string;
   claId?: string | null;
   createdAt: Date;
   updatedAt: Date;

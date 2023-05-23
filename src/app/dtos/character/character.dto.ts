@@ -13,7 +13,7 @@ export class CharacterDto {
     public readonly images: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
-    public readonly alive: boolean,
+    public readonly alive: string,
     public readonly cla?: ICla
   ) {}
 

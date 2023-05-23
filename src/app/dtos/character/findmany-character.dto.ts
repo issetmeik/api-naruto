@@ -6,7 +6,7 @@ export class CharacterFindManyDto {
   constructor(
     public page: number,
     public pageSize: number,
-    public readonly alive?: boolean,
+    public readonly alive?: string,
     public readonly sex?: GenderType,
     public readonly name?: string,
     public readonly claId?: string

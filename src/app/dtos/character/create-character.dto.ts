@@ -9,7 +9,7 @@ export class CreateCharacterDto {
     public readonly page: string,
     public readonly gender: GenderType,
     public readonly images: string,
-    public readonly alive: boolean,
+    public readonly alive: string,
     public readonly claId?: string
   ) {}
 
