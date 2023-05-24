@@ -1,9 +1,20 @@
 import { ClaService } from '../services/cla.service';
-import { controller, httpGet, httpPost } from 'inversify-express-utils';
+import {
+  controller,
+  httpGet,
+  httpPost,
+  httpPut,
+} from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
-import { ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
+import {
+  ClaFindManyDto,
+  ClaFindOneDto,
+  ClaUpdateDto,
+  CreateClaDto,
+} from '../dtos';
 import { BaseHttpResponse } from '../../lib/base-http-response';
+import { authMiddleware } from '../../lib/middlewares/auth';
 
 @controller('/cla')
 export class ClaController {
@@ -26,6 +37,13 @@ export class ClaController {
   @httpGet('/:id', ValidateRequest.withParams(ClaFindOneDto))
   async getOne(req: Request, res: Response) {
     const cla = await this._service.findOne(req.body);
+    const response = BaseHttpResponse.success(cla);
+    res.json(response);
+  }
+
+  @httpPut('/:id', authMiddleware, ValidateRequest.withParams(ClaUpdateDto))
+  async update(req: Request, res: Response) {
+    const cla = await this._service.update(req.body);
     const response = BaseHttpResponse.success(cla);
     res.json(response);
   }

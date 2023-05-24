@@ -1,13 +1,20 @@
 import { Request, Response } from 'express';
-import { controller, httpGet, httpPost } from 'inversify-express-utils';
+import {
+  controller,
+  httpGet,
+  httpPost,
+  httpPut,
+} from 'inversify-express-utils';
 import { CharacterService } from '../services/character.service';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
 import {
   CharacterFindManyDto,
   CharacterFindOneDto,
   CreateCharacterDto,
+  UpdateCharacterDto,
 } from '../dtos';
 import { BaseHttpResponse } from '../../lib/base-http-response';
+import { authMiddleware } from '../../lib/middlewares/auth';
 
 @controller('/character')
 export class CharacterController {
@@ -30,6 +37,17 @@ export class CharacterController {
   @httpGet('/:id', ValidateRequest.withParams(CharacterFindOneDto))
   async getOne(req: Request, res: Response) {
     const character = await this._service.findOne(req.body);
+    const response = BaseHttpResponse.success(character);
+    res.json(response);
+  }
+
+  @httpPut(
+    '/:id',
+    authMiddleware,
+    ValidateRequest.withParams(UpdateCharacterDto)
+  )
+  async updateById(req: Request, res: Response) {
+    const character = await this._service.update(req.body);
     const response = BaseHttpResponse.success(character);
     res.json(response);
   }

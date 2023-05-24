@@ -1,12 +1,22 @@
 import { injectable } from 'inversify';
-import { ClaDto, ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
+import {
+  ClaDto,
+  ClaFindManyDto,
+  ClaFindOneDto,
+  ClaUpdateDto,
+  CreateClaDto,
+} from '../dtos';
 import { ICla } from '../interfaces/cla-interface';
 import { ClaRepository } from '../repositories/cla.repository';
 import { HttpException } from '../exceptions';
+import { UserService } from './user.service';
 
 @injectable()
 export class ClaService {
-  constructor(public readonly _claRepo: ClaRepository) {}
+  constructor(
+    public readonly _claRepo: ClaRepository,
+    private readonly _userService: UserService
+  ) {}
 
   async create(dto: CreateClaDto): Promise<ICla> {
     const response = await this._claRepo.create(dto);
@@ -22,5 +32,11 @@ export class ClaService {
   async findMany(dto: ClaFindManyDto): Promise<Array<ICla>> {
     const clas = await this._claRepo.find(dto);
     return ClaDto.fromMany(clas);
+  }
+
+  async update(dto: ClaUpdateDto): Promise<void> {
+    await this.findOne({ id: dto.id });
+    await this._userService.adminValidate({ id: dto.userId });
+    return this._claRepo.update(dto);
   }
 }

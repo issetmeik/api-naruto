@@ -2,7 +2,6 @@ import { Response, Request } from 'express';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
 import { authMiddleware } from '../../lib/middlewares/auth';
-import { FavoriteService } from '../services/favorite.service';
 import { CreateUserDto, UserFindOneDto } from '../dtos';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
 import { BaseHttpResponse } from '../../lib/base-http-response';

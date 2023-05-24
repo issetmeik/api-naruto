@@ -21,3 +21,5 @@ export * from './favorites/findone-favorite.dto';
 export * from './favorites/findmany-favorite.dto';
 export * from './favorites/delete-favorite.dto';
 export * from './user/create-user.schema';
+export * from './character/update-character.dto';
+export * from './cla/cla-update.dto';

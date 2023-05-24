@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import { injectable } from 'inversify';
-import { ClaFindManyDto, ClaFindOneDto, CreateClaDto } from '../dtos';
+import {
+  ClaFindManyDto,
+  ClaFindOneDto,
+  ClaUpdateDto,
+  CreateClaDto,
+} from '../dtos';
 import { ICla } from '../interfaces/cla-interface';
 
 @injectable()
@@ -36,6 +41,17 @@ export class ClaRepository {
       where: {
         name: { contains: dto.name ? dto.name : undefined },
         externalId: { contains: dto.externalId ? dto.externalId : undefined },
+      },
+    });
+  }
+
+  async update(dto: ClaUpdateDto): Promise<void> {
+    await this._db.cla.update({
+      where: { id: dto.id },
+      data: {
+        name: dto.name,
+        icon: dto.icon,
+        link: dto.link,
       },
     });
   }

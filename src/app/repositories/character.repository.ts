@@ -4,6 +4,7 @@ import {
   CharacterFindManyDto,
   CharacterFindOneDto,
   CreateCharacterDto,
+  UpdateCharacterDto,
 } from '../dtos';
 import { ICharacter } from '../interfaces/character-interface';
 
@@ -42,6 +43,20 @@ export class CharacterRepository {
         gender: dto.gender,
         name: { contains: dto.name ? dto.name : undefined },
         claId: dto.claId,
+      },
+    });
+  }
+
+  async update(dto: UpdateCharacterDto): Promise<void> {
+    await this._db.character.update({
+      where: { id: dto.id },
+      data: {
+        name: dto.name,
+        about: dto.about,
+        images: dto.images,
+        gender: dto.gender,
+        alive: dto.alive,
+        page: dto.page,
       },
     });
   }

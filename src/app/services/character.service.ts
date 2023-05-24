@@ -4,14 +4,19 @@ import {
   CharacterFindManyDto,
   CharacterFindOneDto,
   CreateCharacterDto,
+  UpdateCharacterDto,
 } from '../dtos';
 import { ICharacter } from '../interfaces/character-interface';
 import { CharacterRepository } from '../repositories/character.repository';
 import { HttpException } from '../exceptions';
+import { UserService } from './user.service';
 
 @injectable()
 export class CharacterService {
-  constructor(public readonly _characterRepo: CharacterRepository) {}
+  constructor(
+    public readonly _characterRepo: CharacterRepository,
+    private readonly _userService: UserService
+  ) {}
 
   async create(dto: CreateCharacterDto): Promise<ICharacter> {
     const response = await this._characterRepo.create(dto);
@@ -28,5 +33,11 @@ export class CharacterService {
     const characters = await this._characterRepo.find(dto);
     if (!characters) throw new Error('characters not found');
     return CharacterDto.fromMany(characters);
+  }
+
+  async update(dto: UpdateCharacterDto): Promise<void> {
+    await this.findOne({ id: dto.id });
+    await this._userService.adminValidate({ id: dto.userId });
+    return this._characterRepo.update(dto);
   }
 }
