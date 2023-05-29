@@ -26,7 +26,7 @@ CREATE TABLE "User" (
     "avatar" TEXT NOT NULL,
     "role" "UserRoleType" NOT NULL DEFAULT 'CUSTOMER',
     "birthDate" TIMESTAMP(3) NOT NULL,
-    "password" CHAR(300) NOT NULL,
+    "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deletedAt" TIMESTAMP(3),
@@ -38,9 +38,12 @@ CREATE TABLE "User" (
 CREATE TABLE "Cla" (
     "id" CHAR(36) NOT NULL,
     "externalId" TEXT NOT NULL,
-    "icon" TEXT NOT NULL,
+    "icon" TEXT,
     "name" TEXT NOT NULL,
     "link" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Cla_pkey" PRIMARY KEY ("id")
 );
@@ -52,26 +55,21 @@ CREATE TABLE "Character" (
     "claId" TEXT,
     "name" TEXT NOT NULL,
     "about" TEXT NOT NULL,
+    "images" TEXT NOT NULL,
     "gender" "GenderType" NOT NULL DEFAULT 'UNDEFINED',
-    "birthDate" TIMESTAMP(3) NOT NULL,
-    "age" TEXT NOT NULL,
-    "height" TEXT NOT NULL,
-    "weight" TEXT NOT NULL,
-    "bloodType" TEXT NOT NULL,
-    "occupation" TEXT NOT NULL,
-    "afiliation" TEXT NOT NULL,
-    "partner" TEXT NOT NULL,
-    "ninjaRank" TEXT NOT NULL,
-    "ninjaRegister" TEXT NOT NULL,
+    "alive" TEXT NOT NULL,
     "page" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Character_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Favorites" (
+CREATE TABLE "Favorite" (
     "id" CHAR(36) NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
     "claId" TEXT,
     "characterId" TEXT,
     "type" "FavoriteTypes" NOT NULL,
@@ -79,7 +77,23 @@ CREATE TABLE "Favorites" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deletedAt" TIMESTAMP(3),
 
-    CONSTRAINT "Favorites_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Favorite_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "apiRequest" (
+    "id" CHAR(36) NOT NULL,
+    "method" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "requestBody" TEXT,
+    "requestParams" TEXT,
+    "requestQuery" TEXT,
+    "requestHeaders" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
+
+    CONSTRAINT "apiRequest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -98,7 +112,10 @@ CREATE UNIQUE INDEX "Character_externalId_key" ON "Character"("externalId");
 ALTER TABLE "Character" ADD CONSTRAINT "Character_claId_fkey" FOREIGN KEY ("claId") REFERENCES "Cla"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Favorites" ADD CONSTRAINT "Favorites_claId_fkey" FOREIGN KEY ("claId") REFERENCES "Cla"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_claId_fkey" FOREIGN KEY ("claId") REFERENCES "Cla"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Favorites" ADD CONSTRAINT "Favorites_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

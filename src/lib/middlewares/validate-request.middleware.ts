@@ -1,11 +1,13 @@
 import { BaseMiddleware } from '../base-middleware';
 import { Request, Response, NextFunction } from 'express';
+import { z } from 'zod';
 
 export class ValidateRequest extends BaseMiddleware {
   constructor(
     private readonly _dtoClass: { from: any },
     private readonly _withParams = false,
-    private readonly _withQuery = false
+    private readonly _withQuery = false,
+    private readonly _withFile = false
   ) {
     super();
   }
@@ -25,6 +27,10 @@ export class ValidateRequest extends BaseMiddleware {
       req.body = { ...req.body, ...req.query };
     }
 
+    if (this._withFile) {
+      req.body = { ...req.body, ...req.file };
+    }
+
     req.body = this._dtoClass.from(req.body);
     next();
   }
@@ -39,5 +45,9 @@ export class ValidateRequest extends BaseMiddleware {
 
   static withQuery(dto: any) {
     return new ValidateRequest(dto, false, true).execute;
+  }
+
+  static withFile(dto: any) {
+    return new ValidateRequest(dto, false, false, true).execute;
   }
 }

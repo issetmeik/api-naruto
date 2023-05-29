@@ -4,17 +4,19 @@ import {
   UserDto,
   UserFindByEmailDto,
   UserFindOneDto,
+  UserUpdateDto,
 } from '../dtos';
-import { IUser } from '../interfaces/user-interface';
 import { UserRepository } from '../repositories/user.repository';
 import * as bcrypt from 'bcryptjs';
-import { createUserSchema } from '../dtos';
 import { HttpException } from '../exceptions';
-import { UserRoleType } from '@prisma/client';
+import { S3Storage } from '../../utils/S3Storage';
 
 @injectable()
 export class UserService {
-  constructor(private readonly _userRepo: UserRepository) {}
+  constructor(
+    private readonly _userRepo: UserRepository,
+    private readonly s3: S3Storage
+  ) {}
 
   async findOne(user: UserFindOneDto): Promise<UserDto> {
     const foundUser = await this._userRepo.findOne(user.id);
@@ -33,6 +35,11 @@ export class UserService {
     return UserDto.from(foundUser);
   }
 
+  async updateOne(user: UserUpdateDto): Promise<void> {
+    await this.findOne({ id: user.id });
+    return this._userRepo.update(user);
+  }
+
   checkPassword(password: string, hash: string): Promise<boolean> {
     return bcrypt.compare(password, hash);
   }
@@ -42,5 +49,19 @@ export class UserService {
     if (user.role !== 'ADMIN') {
       throw new HttpException('Operation now allowed', 401);
     }
+  }
+
+  async uploadImg(
+    dto: UserFindOneDto,
+    image: Express.Multer.File
+  ): Promise<void> {
+    const url = await this.s3.saveFile(image.filename);
+    const user = await this.findOne(dto);
+    const updateDto: UserUpdateDto = {
+      id: user.id,
+      avatar: url,
+    };
+    console.log('dto', user);
+    await this.updateOne(updateDto);
   }
 }

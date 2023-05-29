@@ -1,37 +1,22 @@
-import express, { NextFunction, Request, Response } from 'express';
+import * as express from 'express';
 import 'express-async-errors';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from './config/di-container';
-import { ValidationException, HttpException } from './app/exceptions';
-import { BaseHttpResponse } from './lib/base-http-response';
-import { Application } from './lib/abstract-application';
+import { errorMiddleware } from './lib/middlewares/error-handler.middleware';
+import { requestMiddleware } from './lib/middlewares/request-logger.middleware';
+import rateLimit from 'express-rate-limit';
 
 export class App {
   async setup() {
     const server = new InversifyExpressServer(container);
     server.setErrorConfig((app) => {
-      app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-        if (err instanceof ValidationException) {
-          const response = BaseHttpResponse.failed(err.message);
-          res.status(response.statusCode).json(response);
-          next();
-        }
-
-        if (err instanceof HttpException) {
-          const response = BaseHttpResponse.failed(err.message, err.statusCode);
-          res.status(response.statusCode).json(response);
-          next();
-        }
-
-        if (err instanceof Error) {
-          const response = BaseHttpResponse.failed(err.message, 500);
-          res.status(response.statusCode).json(response);
-        }
-      });
+      app.use(errorMiddleware);
     });
 
     server.setConfig((app) => {
       app.use(express.json());
+      app.use(requestMiddleware);
+      app.use('*', rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
     });
 
     const app = server.build();

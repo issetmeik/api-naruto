@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { injectable } from 'inversify';
-import { CreateUserDto, UserFindOneDto } from '../dtos';
+import { CreateUserDto, UserFindOneDto, UserUpdateDto } from '../dtos';
 import { IUser } from '../interfaces/user-interface';
 import * as bcrypt from 'bcryptjs';
 
@@ -46,5 +46,19 @@ export class UserRepository {
 
   generateHash(password: string): Promise<string> {
     return bcrypt.hash(password, 8);
+  }
+
+  async update(entity: UserUpdateDto): Promise<void> {
+    await this._db.user.update({
+      where: {
+        id: entity.id,
+      },
+      data: {
+        name: entity.name,
+        email: entity.email,
+        avatar: entity.avatar,
+        birthDate: entity.birthDate,
+      },
+    });
   }
 }
