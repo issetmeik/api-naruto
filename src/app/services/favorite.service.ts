@@ -1,5 +1,6 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import {
+  CreateCsvFavoriteDto,
   CreateFavoriteDto,
   DeleteFavoriteDto,
   FavoriteDto,
@@ -10,13 +11,15 @@ import { FavoriteRepository } from '../repositories/favorite.repository';
 import { ClaService } from './cla.service';
 import { CharacterService } from './character.service';
 import { HttpException } from '../exceptions';
+import { ExportFiles } from '../../utils/exportFiles';
 
 @injectable()
 export class FavoriteService {
   constructor(
     private readonly _favoriteRepo: FavoriteRepository,
     private readonly _claService: ClaService,
-    private readonly _characterService: CharacterService
+    private readonly _characterService: CharacterService,
+    private readonly _exportFiles: ExportFiles
   ) {}
 
   async create(favorite: CreateFavoriteDto): Promise<FavoriteDto> {
@@ -50,5 +53,16 @@ export class FavoriteService {
       throw new HttpException('operation not allowed', 400);
     }
     await this._favoriteRepo.delete(dto);
+  }
+
+  async createCsv(dto: CreateCsvFavoriteDto): Promise<string> {
+    const findManyDto: FavoriteFindManyDto = {
+      page: 1,
+      pageSize: 50,
+      userId: dto.userId,
+    };
+    const favorites = await this.findMany(findManyDto);
+
+    return await this._exportFiles.exportFavorites(favorites, dto.type);
   }
 }

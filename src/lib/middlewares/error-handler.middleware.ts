@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ValidationException, HttpException } from '../../app/exceptions';
 import { BaseHttpResponse } from '../../lib/base-http-response';
-import { ZodError } from 'zod';
+import { z } from 'zod';
 
 export function errorMiddleware(
   err: Error,
@@ -24,10 +24,20 @@ export function errorMiddleware(
   if (err instanceof Error) {
     const response = BaseHttpResponse.failed(err.message, 500);
     res.status(response.statusCode).json(response);
+    next();
   }
 
-  if (err instanceof ZodError) {
-    const response = BaseHttpResponse.failed(err.message, 400);
-    res.status(response.statusCode).json(response);
+  if (err instanceof z.ZodError) {
+    const error = err.issues.map((e) => ({
+      path: e.path[0],
+      message: e.message,
+    }));
+
+    res.status(409).json({
+      data: null,
+      error: error,
+      statusCode: 409,
+    });
+    next();
   }
 }

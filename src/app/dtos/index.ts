@@ -24,3 +24,4 @@ export * from './user/create-user.schema';
 export * from './character/update-character.dto';
 export * from './cla/cla-update.dto';
 export * from './user/update-user.dto';
+export * from './favorites/csv-favorite.dto';

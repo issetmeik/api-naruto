@@ -14,6 +14,7 @@ import { FavoriteController } from '../app/controllers/favorite.controller';
 import { FavoriteService } from '../app/services/favorite.service';
 import { FavoriteRepository } from '../app/repositories/favorite.repository';
 import { S3Storage } from '../utils/S3Storage';
+import { ExportFiles } from '../utils/exportFiles';
 
 export const container = new Container({
   defaultScope: 'Singleton',
@@ -34,3 +35,4 @@ container.bind(FavoriteController).toSelf();
 container.bind(FavoriteService).toSelf();
 container.bind(FavoriteRepository).toSelf();
 container.bind(S3Storage).toSelf();
+container.bind(ExportFiles).toSelf();

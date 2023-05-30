@@ -7,21 +7,20 @@ import {
 } from 'inversify-express-utils';
 import { FavoriteService } from '../services/favorite.service';
 import { authMiddleware } from '../../lib/middlewares/auth';
-import { FavoriteTypes } from '@prisma/client';
 import {
+  CreateCsvFavoriteDto,
   CreateFavoriteDto,
   DeleteFavoriteDto,
   FavoriteFindManyDto,
 } from '../dtos';
-import { UserService } from '../services/user.service';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
 import { BaseHttpResponse } from '../../lib/base-http-response';
+import { inject } from 'inversify';
 
 @controller('/favorite')
 export class FavoriteController {
   constructor(
-    private readonly _service: FavoriteService,
-    private readonly _userService: UserService
+    @inject(FavoriteService) private readonly _service: FavoriteService
   ) {}
 
   @httpPost(
@@ -51,6 +50,17 @@ export class FavoriteController {
   async delete(req: Request, res: Response) {
     const favorite = await this._service.delete(req.body);
     const response = BaseHttpResponse.success(favorite);
+    res.json(response);
+  }
+
+  @httpGet(
+    '/csv',
+    authMiddleware,
+    ValidateRequest.withQuery(CreateCsvFavoriteDto)
+  )
+  async getCsv(req: Request, res: Response) {
+    const favorites = await this._service.createCsv(req.body);
+    const response = BaseHttpResponse.success(favorites);
     res.json(response);
   }
 }

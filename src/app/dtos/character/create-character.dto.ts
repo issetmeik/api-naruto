@@ -1,18 +1,7 @@
 import { GenderType } from '@prisma/client';
 import { ValidationException } from '../../exceptions';
-import { ZodError, z } from 'zod';
-import { type } from 'os';
+import { z } from 'zod';
 
-const schema = z.object({
-  name: z.string(),
-  externalId: z.string(),
-  about: z.string(),
-  page: z.string(),
-  gender: z.enum(['MAN', 'WOMEN', 'UNDEFINED']),
-  images: z.string(),
-  alive: z.string(),
-  claId: z.string().optional().nullable(),
-});
 export class CreateCharacterDto {
   constructor(
     public readonly name: string,
@@ -22,34 +11,28 @@ export class CreateCharacterDto {
     public readonly gender: GenderType,
     public readonly images: string,
     public readonly alive: string,
-    public readonly claId?: string | null
+    public readonly claId?: string
   ) {}
 
   static async from(body: Partial<CreateCharacterDto>) {
-    try {
-      const validate = schema.parse(body);
-      console.log(validate);
+    if (!body.name) throw new ValidationException('Missing property name');
+    if (!body.externalId)
+      throw new ValidationException('Missing property externalId');
+    if (!body.about) throw new ValidationException('Missing property about');
+    if (!body.page) throw new ValidationException('Missing property page');
+    if (!body.gender) throw new ValidationException('Missing property gender');
+    if (!body.images) throw new ValidationException('Missing property images');
+    if (!body.alive) throw new ValidationException('Missing property alive');
 
-      return new CreateCharacterDto(
-        validate.name,
-        validate.externalId,
-        validate.about,
-        validate.page,
-        validate.gender,
-        validate.images,
-        validate.alive,
-        validate.claId
-      );
-    } catch (error) {
-      let err = error;
-      if (err instanceof ZodError) {
-        err = err.issues.map((e) => ({
-          path: e.path[0],
-          message: e.message,
-        }));
-        console.log(err);
-      }
-      throw error;
-    }
+    return new CreateCharacterDto(
+      body.name,
+      body.externalId,
+      body.about,
+      body.page,
+      body.gender,
+      body.images,
+      body.alive,
+      body.claId
+    );
   }
 }

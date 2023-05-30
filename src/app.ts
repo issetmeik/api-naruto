@@ -15,7 +15,7 @@ export class App {
 
     server.setConfig((app) => {
       app.use(express.json());
-      app.use(requestMiddleware);
+      // app.use(requestMiddleware);
       app.use('*', rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
     });
 
