@@ -18,27 +18,27 @@ João tem um sistema legado, onde tem uma base de usuários que gostaria de migr
 
 ## Requisitos funcionais
 
-- :check: O usuário deve poder listar todos os personagens ;
-- :check: O usuário deve poder listar todos os clãs;
-- :check: O usuário deve poder adicionar e remover dos favoritos os personagens e os clãs;
-- :check: O usuário deve poder listar os personagens e os clãs favoritos;
-- :check: O usuário deve poder consultar um personagem, caso o personagem tenha clã, deve ser retornado a informações do clã.
-- :check: O usuário deve poder consultar um clã, e retornar todos os personagens vinculados ao clã;
-- :check: O usuário deve poder filtrar o personagem por estado(vivo/morto), sexo, nome, clã (quando disponível);
-- :check: O usuário deve poder ver o perfil de outro usuário;
-- :check: O usuário deve poder editar os personagens/clãs, e gerenciar os usuários do sistema (usuário com outro nível de permissão);
-- :check: O usuário deve poder se cadastrar na aplicação;
-- :check: O usuário deve poder fazer upload de uma foto de perfil;
+- :ballot_box_with_check: O usuário deve poder listar todos os personagens ;
+- :ballot_box_with_check: O usuário deve poder listar todos os clãs;
+- :ballot_box_with_check: O usuário deve poder adicionar e remover dos favoritos os personagens e os clãs;
+- :ballot_box_with_check: O usuário deve poder listar os personagens e os clãs favoritos;
+- :ballot_box_with_check: O usuário deve poder consultar um personagem, caso o personagem tenha clã, deve ser retornado a informações do clã.
+- :ballot_box_with_check: O usuário deve poder consultar um clã, e retornar todos os personagens vinculados ao clã;
+- :ballot_box_with_check: O usuário deve poder filtrar o personagem por estado(vivo/morto), sexo, nome, clã (quando disponível);
+- :ballot_box_with_check: O usuário deve poder ver o perfil de outro usuário;
+- :ballot_box_with_check: O usuário deve poder editar os personagens/clãs, e gerenciar os usuários do sistema (usuário com outro nível de permissão);
+- :ballot_box_with_check: O usuário deve poder se cadastrar na aplicação;
+- :ballot_box_with_check: O usuário deve poder fazer upload de uma foto de perfil;
 
 ## Extra
 
-- :check: Logs das requisições para api;
-- :check: Documentação da API;
-- :check: Rate limiting;
-- :check: Exportação dos favoritos em CSV para análise de dados;
-- :check: Aplicação de testes unitários, integração e e2e;
+- :ballot_box_with_check: Logs das requisições para api;
+- :ballot_box_with_check: Documentação da API;
+- :ballot_box_with_check: Rate limiting;
+- :ballot_box_with_check: Exportação dos favoritos em CSV para análise de dados;
+- :ballot_box_with_check: Aplicação de testes unitários, integração e e2e;
 - :ballot_box_with_check: Uso de algum serviço para arquivos estáticos;
-- :white_check_mark: Deploy da aplicação
+- :ballot_box_with_check: Deploy da aplicação
 
 ## Start
 
