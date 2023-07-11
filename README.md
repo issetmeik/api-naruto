@@ -8,7 +8,7 @@ João has a legacy system where he has a user database that he would like to mig
 - [Basic Assumptions](#Basic-Assumptions)
 - [Functional Requirements](#Functional-Requirements)
 - [Start](#start)
-- [API Documentation](#api-documentation)
+- [API](#api)
 - [Technologies](#Technologies)
 - [Environment](#Environment)
 
@@ -45,10 +45,10 @@ João has a legacy system where he has a user database that he would like to mig
 
 To facilitate the consumption of the API, download the apinaruto.json file, which contains all available routes in the API. After downloading the file, import it into Insomnia.
 
-## API-Documentation
+## API
 
-Link to the API documentation with routes and request models:
-https://api-naruto-w2uc.onrender.com/docs
+- API baseurl: https://api-naruto-w2uc.onrender.com
+- API documentation: https://api-naruto-w2uc.onrender.com/docs
 
 ## Technologies
 
