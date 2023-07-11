@@ -47,8 +47,8 @@ To facilitate the consumption of the API, download the apinaruto.json file, whic
 
 ## API
 
-- API baseurl: https://api-naruto-w2uc.onrender.com
-- API documentation: https://api-naruto-w2uc.onrender.com/docs
+- Base URL: https://api-naruto-w2uc.onrender.com
+- Documentation: https://api-naruto-w2uc.onrender.com/docs
 
 ## Technologies
 
