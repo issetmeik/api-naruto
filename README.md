@@ -5,10 +5,10 @@ João has a legacy system where he has a user database that he would like to mig
 ## Index
 
 - [Technical Test](<#technical-test(Semantix)>)
-- [Index](#index)
 - [Basic Assumptions](#Basic-Assumptions)
 - [Functional Requirements](#Functional-Requirements)
 - [Start](#start)
+- [API Documentation](#api-documentation)
 - [Technologies](#Technologies)
 - [Environment](#Environment)
 
@@ -45,7 +45,7 @@ João has a legacy system where he has a user database that he would like to mig
 
 To facilitate the consumption of the API, download the apinaruto.json file, which contains all available routes in the API. After downloading the file, import it into Insomnia.
 
-## Documentação da API
+## API-Documentation
 
 Link to the API documentation with routes and request models:
 https://api-naruto-w2uc.onrender.com/docs
