@@ -51,7 +51,7 @@ export class UserRepository {
   async update(entity: UserUpdateDto): Promise<void> {
     await this._db.user.update({
       where: {
-        id: entity.id,
+        id: entity.userId,
       },
       data: {
         name: entity.name,

@@ -2,7 +2,7 @@ import { ValidationException } from '../../exceptions';
 
 export class UserUpdateDto {
   constructor(
-    public readonly id: string,
+    public readonly userId: string,
     public readonly avatar?: string,
     public readonly name?: string,
     public readonly email?: string,
@@ -10,10 +10,10 @@ export class UserUpdateDto {
   ) {}
 
   static from(body: Partial<UserUpdateDto>) {
-    if (!body.id) throw new ValidationException('Missing property ida');
+    if (!body.userId) throw new ValidationException('Missing property ida');
 
     return new UserUpdateDto(
-      body.id,
+      body.userId,
       body.avatar,
       body.name,
       body.email,

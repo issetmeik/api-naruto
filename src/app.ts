@@ -4,6 +4,8 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from './config/di-container';
 import { errorMiddleware } from './lib/middlewares/error-handler.middleware';
 import { requestMiddleware } from './lib/middlewares/request-logger.middleware';
+import swaggerUi from 'swagger-ui-express';
+import swaggerConfig from './swagger.json';
 import rateLimit from 'express-rate-limit';
 
 export class App {
@@ -15,8 +17,9 @@ export class App {
 
     server.setConfig((app) => {
       app.use(express.json());
-      // app.use(requestMiddleware);
-      app.use('*', rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+      app.use(requestMiddleware);
+      app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+      //app.use('*', rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
     });
 
     const app = server.build();

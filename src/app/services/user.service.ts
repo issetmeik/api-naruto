@@ -36,7 +36,7 @@ export class UserService {
   }
 
   async updateOne(user: UserUpdateDto): Promise<void> {
-    await this.findOne({ id: user.id });
+    await this.findOne({ id: user.userId });
     return this._userRepo.update(user);
   }
 
@@ -52,16 +52,15 @@ export class UserService {
   }
 
   async uploadImg(
-    dto: UserFindOneDto,
+    dto: UserUpdateDto,
     image: Express.Multer.File
   ): Promise<void> {
+    const user = await this.findOne({ id: dto.userId });
     const url = await this.s3.saveFile(image.filename);
-    const user = await this.findOne(dto);
     const updateDto: UserUpdateDto = {
-      id: user.id,
+      userId: user.id,
       avatar: url,
     };
-    console.log('dto', user);
     await this.updateOne(updateDto);
   }
 }

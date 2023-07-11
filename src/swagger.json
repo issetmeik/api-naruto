@@ -1,0 +1,757 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sample API",
+    "description": "API description in Markdown.",
+    "contact": {
+      "email": "joaotavares@dev.com",
+      "name": "Joao Tavares"
+    },
+    "version": "1.0.0"
+  },
+  "host": "api.example.com",
+  "basePath": "/v1",
+  "schemes": ["https"],
+  "paths": {
+    "/session": {
+      "post": {
+        "summary": "Get token",
+        "tags": ["Session"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["email", "password"]
+              },
+              "example": {
+                "email": "joaotavares@dev.com",
+                "password": "p4$$w0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["id", "name", "email", "token"]
+                    },
+                    "error": {
+                      "type": ["object", "null"]
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "required": ["data", "error", "statusCode"]
+                },
+                "example": {
+                  "data": {
+                    "id": "ac8d04a4-4b96-4d25-821f-fb1e70u23608",
+                    "name": "Joao Dev",
+                    "email": "joaotavares@dev.com",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO4"
+                  },
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create user",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              },
+              "example": {
+                "name": "Joao Tavares",
+                "email": "joaotavares@dev.com",
+                "birthDate": "2018-12-10T13:49:51.141Z",
+                "password": "pa$$w0rd",
+                "avatar": "avatar.com.br"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "example": {
+                  "data": {
+                    "id": "cf58b454-cd06-43df-87ed-16bc3a5f9e0e",
+                    "name": "Joao Admin",
+                    "email": "joao7711@gmail.com",
+                    "avatar": "avatar.com.br",
+                    "role": "CUSTOMER",
+                    "birthDate": "2018-12-10T13:49:51.141Z",
+                    "password": "$2a$08$CTS6K1qKW2HMclFK9fzUb.lqtaCyUwb43r3EzyIMTVT.gKvpAYhG2",
+                    "createdAt": "2023-05-30T18:37:14.977Z",
+                    "updatedAt": "2023-05-30T18:37:14.977Z",
+                    "externalId": null
+                  },
+                  "error": null,
+                  "statusCode": 201
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get User",
+        "description": "Get user by ID",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "type": "string",
+            "example": "cf58b454-cd06-43df-87ed-16bc3a5f9e1u"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User found!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "example": {
+                  "data": {
+                    "id": "cf58b454-cd06-43df-87ed-16bc3a5f9e0e",
+                    "name": "Joao Admin",
+                    "email": "joao7711@gmail.com",
+                    "avatar": "avatar.com.br",
+                    "role": "CUSTOMER",
+                    "birthDate": "2018-12-10T13:49:51.141Z",
+                    "password": "$2a$08$CTS6K1qKW2HMclFK9fzUb.lqtaCyUwb43r3EzyIMTVT.gKvpAYhG2",
+                    "createdAt": "2023-05-30T18:37:14.977Z",
+                    "updatedAt": "2023-05-30T18:37:14.977Z",
+                    "externalId": null
+                  },
+                  "error": null,
+                  "statusCode": 201
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/image": {
+      "put": {
+        "tags": ["User"],
+        "summary": "PUT image",
+        "description": "Update user avatar",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Image file",
+            "required": "true",
+            "type": "file"
+          }
+        ],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": ["null", "string"]
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    }
+                  },
+                  "example": {
+                    "data": {},
+                    "error": null,
+                    "statusCode": 200
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorite/{id}": {
+      "post": {
+        "summary": "Create favorite",
+        "tags": ["Favorite"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["cla", "character"]
+                  }
+                },
+                "required": ["type"]
+              },
+              "example": {
+                "type": "cla"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": ["cla", "other"]
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "userId",
+                        "type",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    },
+                    "error": {
+                      "type": ["object", "null"]
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "required": ["data", "error", "statusCode"]
+                },
+                "example": {
+                  "data": {
+                    "id": "612a252a-4189-41e6-86a4-51e6414cecc6",
+                    "userId": "ac8d04a4-4b96-4d25-821f-fb1e70923608",
+                    "type": "cla",
+                    "createdAt": "2023-05-31T11:16:53.119Z",
+                    "updatedAt": "2023-05-31T11:16:53.119Z"
+                  },
+                  "error": null,
+                  "statusCode": 201
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete favorite",
+        "tags": ["Favorite"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          },
+          {
+            "name": "Favorite id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {},
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorite": {
+      "get": {
+        "summary": "Get user favorites",
+        "tags": ["Favorite"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "0ee91d5d-1a1e-4211-829b-3443aed4d8fc",
+                      "userId": "ac8d04a4-4b96-4d25-821f-fb1e70923608",
+                      "type": "cla",
+                      "createdAt": "2023-05-31T20:45:48.086Z",
+                      "updatedAt": "2023-05-31T20:45:48.086Z",
+                      "cla": {
+                        "id": "ef8ad087-c32e-43c6-8070-a351ba67f906",
+                        "externalId": "12",
+                        "icon": "https://static.wikia.nocookie.net/naruto/images/f/f9/S%C3%ADmbolo_Cl%C3%A3_Yotsuki.svg/revision/latest/scale-to-width-down/70?cb=20121117155818&path-prefix=pt-br",
+                        "name": "Cla Yotsuki",
+                        "link": "https://naruto.fandom.com/pt-br/wiki/Cl%C3%A3_Yotsuki",
+                        "createdAt": "2023-05-31T20:45:32.399Z",
+                        "updatedAt": "2023-05-31T20:45:32.399Z",
+                        "deletedAt": null
+                      },
+                      "character": null
+                    },
+                    {
+                      "id": "c8144faf-fcf8-4876-a8a0-776de9029181",
+                      "userId": "ac8d04a4-4b96-4d25-821f-fb1e70923608",
+                      "type": "character",
+                      "createdAt": "2023-05-31T20:42:56.424Z",
+                      "updatedAt": "2023-05-31T20:42:56.424Z",
+                      "cla": null,
+                      "character": {
+                        "id": "8a2f25da-6a4c-4f7f-ae21-2fecc616314a",
+                        "externalId": "978881111111111",
+                        "claId": null,
+                        "name": "Zabuza Momochi",
+                        "about": "Zabuza Momochi (桃地再不斩, Momochi Zabuza), também conhecido como Demônio da Névoa Oculta (霧隠れの鬼人, Kirigakure no Kijin), foi um nukenin e membro dos Sete Espadachins da Névoa de Kirigakure, e o primeiro antagonista principal da série.",
+                        "images": "https://gkbzmcahsvowlfjslvnm.supabase.in/storage/v1/object/public/characters/Zabuza_Momochi.webp",
+                        "gender": "MAN",
+                        "alive": "Vivo",
+                        "page": "https://naruto.fandom.com/pt-br/wiki/Zabuza_Momochi",
+                        "createdAt": "2023-05-31T20:42:38.492Z",
+                        "updatedAt": "2023-05-31T20:42:38.492Z",
+                        "deletedAt": null
+                      }
+                    }
+                  ],
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorite/csv": {
+      "get": {
+        "summary": "Get CSV",
+        "tags": ["Favorite"],
+        "description": "Get CSV file, with favorites",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjOGQwNGE0LTRiOTYtNGQyNS04MjFmLWZiMWU3MDkyMzYwOCIsImlhdCI6MTY4NTUzMTYzOCwiZXhwIjoxNjg1NjE4MDM4fQ.kfHxR-M4HBznkkkRuveUkFD8HRTbbJkdstAblsz6oO5"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Favorite type",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["cla", "character"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": "https://api-naruto.s3.amazonaws.com/api__naruto/tmp/a89092af-613b-45cf-90e1-297b2dd8cd62.csv?AWSAccessKeyId=AKIA5FDQS7R6OSCA4YC7&Expires=1685532741&Signature=3oFPLHcXpArNPilPOJjPvdFvpNc%3D",
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character": {
+      "get": {
+        "summary": "Get characters",
+        "tags": ["Character"],
+        "description": "List all characters",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page for consult",
+            "required": true,
+            "type": "integer",
+            "example": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": true,
+            "type": "integer",
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "5c50ba43-f464-4b68-b92f-52cb73953609",
+                      "name": "Zabuza Momochi",
+                      "externalId": "97888111111111",
+                      "about": "Zabuza Momochi (桃地再不斩, Momochi Zabuza), também conhecido como Demônio da Névoa Oculta (霧隠れの鬼人, Kirigakure no Kijin), foi um nukenin e membro dos Sete Espadachins da Névoa de Kirigakure, e o primeiro antagonista principal da série.",
+                      "page": "https://naruto.fandom.com/pt-br/wiki/Zabuza_Momochi",
+                      "gender": "MAN",
+                      "images": "https://gkbzmcahsvowlfjslvnm.supabase.in/storage/v1/object/public/characters/Zabuza_Momochi.webp",
+                      "createdAt": "2023-05-29T14:02:17.141Z",
+                      "updatedAt": "2023-05-29T14:02:17.141Z",
+                      "alive": "Vivo"
+                    }
+                  ],
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cla": {
+      "get": {
+        "summary": "Get clas",
+        "tags": ["Cla"],
+        "description": "List all clas",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page for consult",
+            "required": true,
+            "type": "integer",
+            "example": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": true,
+            "type": "integer",
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "353521b6-d8c2-40e6-ae9d-94c945c2ea77",
+                      "name": "Clã teste",
+                      "link": "akatsuki.com",
+                      "createdAt": "2023-05-29T20:02:40.492Z",
+                      "updatedAt": "2023-05-29T20:02:40.492Z",
+                      "externalId": "1237717188",
+                      "icon": "teste"
+                    },
+                    {
+                      "id": "ef8ad087-c32e-43c6-8070-a351ba67f906",
+                      "name": "Cla Yotsuki",
+                      "link": "https://naruto.fandom.com/pt-br/wiki/Cl%C3%A3_Yotsuki",
+                      "createdAt": "2023-05-31T20:45:32.399Z",
+                      "updatedAt": "2023-05-31T20:45:32.399Z",
+                      "externalId": "12",
+                      "icon": "https://static.wikia.nocookie.net/naruto/images/f/f9/S%C3%ADmbolo_Cl%C3%A3_Yotsuki.svg/revision/latest/scale-to-width-down/70?cb=20121117155818&path-prefix=pt-br"
+                    }
+                  ],
+                  "error": null,
+                  "statusCode": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "UserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "password": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "birthDate", "password"]
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string",
+                "nullable": true
+              },
+              "role": {
+                "type": "string",
+                "enum": ["CUSTOMER", "ADMIN"]
+              },
+              "birthDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "password": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "externalId": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email",
+              "role",
+              "birthDate",
+              "password",
+              "createdAt",
+              "updatedAt"
+            ]
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["data", "statusCode"]
+      },
+      "FavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "userId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["cla", "other"]
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["id", "userId", "type", "createdAt", "updatedAt"]
+          },
+          "error": {
+            "type": ["object", "null"]
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["data", "error", "statusCode"]
+      }
+    }
+  }
+}

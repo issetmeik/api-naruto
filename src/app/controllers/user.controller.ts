@@ -7,7 +7,7 @@ import {
 } from 'inversify-express-utils';
 import { UserService } from '../services/user.service';
 import { authMiddleware } from '../../lib/middlewares/auth';
-import { CreateUserDto, UserFindOneDto } from '../dtos';
+import { CreateUserDto, UserFindOneDto, UserUpdateDto } from '../dtos';
 import { ValidateRequest } from '../../lib/middlewares/validate-request.middleware';
 import { BaseHttpResponse } from '../../lib/base-http-response';
 import { upload } from '../../lib/middlewares/multer.middleware';
@@ -32,9 +32,9 @@ export class UserController {
   }
 
   @httpPut(
-    '/image/:id',
+    '/image',
     authMiddleware,
-    ValidateRequest.withParams(UserFindOneDto),
+    ValidateRequest.withParams(UserUpdateDto),
     upload.single('image')
   )
   async uploadAvatar(req: Request, res: Response) {

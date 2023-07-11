@@ -14,7 +14,7 @@ export class CreateCharacterDto {
     public readonly claId?: string
   ) {}
 
-  static async from(body: Partial<CreateCharacterDto>) {
+  static from(body: Partial<CreateCharacterDto>) {
     if (!body.name) throw new ValidationException('Missing property name');
     if (!body.externalId)
       throw new ValidationException('Missing property externalId');
