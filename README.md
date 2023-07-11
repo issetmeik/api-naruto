@@ -37,7 +37,7 @@ João tem um sistema legado, onde tem uma base de usuários que gostaria de migr
 - :check: Rate limiting;
 - :check: Exportação dos favoritos em CSV para análise de dados;
 - :check: Aplicação de testes unitários, integração e e2e;
-- :white_check_mark: Uso de algum serviço para arquivos estáticos;
+- :ballot_box_with_check: Uso de algum serviço para arquivos estáticos;
 - :white_check_mark: Deploy da aplicação
 
 ## Start
