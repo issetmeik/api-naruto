@@ -1,55 +1,56 @@
-## Teste-Técnico(Semantix)
+## Technical-Test(Semantix)
 
-João tem um sistema legado, onde tem uma base de usuários que gostaria de migrar para o novo sistema. O novo sistema que o João idealizou é um Wikipédia de uma anime que ele é muito fã (Naruto).
+João has a legacy system where he has a user database that he would like to migrate to the new system. The new system that João envisioned is a Wikipedia for an anime that he is a big fan of Naruto.
 
-## Indice
+## Index
 
-- [Teste Técnico-Semantix](<#Teste-Técnico(Semantix)>)
-- [Índice](#indice)
-- [Premissas Básicas](#premissas-básicas)
+- [Technical Test](<#technical-test(Semantix)>)
+- [Index](#index)
+- [Basic Assumptions](#Basic-Assumptions)
+- [Functional Requirements](#Functional-Requirements)
 - [Start](#start)
-- [Tecnologias](#tecnologias)
-- [Ambiente](#ambiente)
+- [Technologies](#Technologies)
+- [Environment](#Environment)
 
-## Premissas-Básicas
+## Basic-Assumptions
 
-- Importação da base de usuários do sistema legado;
-- Importação dos personagens e dos clãs;
+- :ballot_box_with_check: Import the user base from the legacy system;
+- :ballot_box_with_check: Import the characters and clans.
 
-## Requisitos funcionais
+## Functional-Requirements
 
-- :ballot_box_with_check: O usuário deve poder listar todos os personagens ;
-- :ballot_box_with_check: O usuário deve poder listar todos os clãs;
-- :ballot_box_with_check: O usuário deve poder adicionar e remover dos favoritos os personagens e os clãs;
-- :ballot_box_with_check: O usuário deve poder listar os personagens e os clãs favoritos;
-- :ballot_box_with_check: O usuário deve poder consultar um personagem, caso o personagem tenha clã, deve ser retornado a informações do clã.
-- :ballot_box_with_check: O usuário deve poder consultar um clã, e retornar todos os personagens vinculados ao clã;
-- :ballot_box_with_check: O usuário deve poder filtrar o personagem por estado(vivo/morto), sexo, nome, clã (quando disponível);
-- :ballot_box_with_check: O usuário deve poder ver o perfil de outro usuário;
-- :ballot_box_with_check: O usuário deve poder editar os personagens/clãs, e gerenciar os usuários do sistema (usuário com outro nível de permissão);
-- :ballot_box_with_check: O usuário deve poder se cadastrar na aplicação;
-- :ballot_box_with_check: O usuário deve poder fazer upload de uma foto de perfil;
+- :ballot_box_with_check: The user should be able to list all characters;
+- :ballot_box_with_check: The user should be able to list all clans;
+- :ballot_box_with_check: The user should be able to add and remove characters and clans from favorites;
+- :ballot_box_with_check: The user should be able to list favorite characters and clans;
+- :ballot_box_with_check: The user should be able to query a character, and if the character has a clan, the clan information should be returned;
+- :ballot_box_with_check: The user should be able to query a clan and retrieve all characters associated with that clan;
+- :ballot_box_with_check: The user should be able to filter characters by status (alive/deceased), gender, name, and clan (when available);
+- :ballot_box_with_check: The user should be able to view another user's profile;
+- :ballot_box_with_check: OThe user should be able to edit characters, clans, and manage system users (users with different permission levels);
+- :ballot_box_with_check: The user should be able to register in the application;
+- :ballot_box_with_check: The user should be able to upload a profile picture.
 
 ## Extra
 
-- :ballot_box_with_check: Logs das requisições para api;
-- :ballot_box_with_check: Documentação da API;
+- :ballot_box_with_check: Request logs for the API;;
+- :ballot_box_with_check: API documentation;
 - :ballot_box_with_check: Rate limiting;
-- :ballot_box_with_check: Exportação dos favoritos em CSV para análise de dados;
-- :ballot_box_with_check: Aplicação de testes unitários, integração e e2e;
-- :ballot_box_with_check: Uso de algum serviço para arquivos estáticos;
-- :ballot_box_with_check: Deploy da aplicação
+- :ballot_box_with_check: Export favorites to CSV for data analysis;
+- Unit, integration, and end-to-end testing;
+- :ballot_box_with_check: Use of a service for static files;
+- :ballot_box_with_check: Deployment of the application.
 
 ## Start
 
-Para facilitar o consumo da API, baixe o arquivo **apinaruto.json**, ele contém todas as rotas disponiveis na API, após baixar o arquivo importe no imsomnia.
+To facilitate the consumption of the API, download the apinaruto.json file, which contains all available routes in the API. After downloading the file, import it into Insomnia.
 
 ## Documentação da API
 
-Link da documentação da API com as rotas e modelos de request:
+Link to the API documentation with routes and request models:
 https://api-naruto-w2uc.onrender.com/docs
 
-## Tecnologias
+## Technologies
 
 - :star: Node.js
 - :star: Typescript
@@ -57,11 +58,11 @@ https://api-naruto-w2uc.onrender.com/docs
 - :star: PostgreSQL
 - :star: AWS S3
 
-## Ambiente
+## Environment
 
-- :desktop_computer: Visual Studio Code para codificação
-- :desktop_computer: MongoDB Compass para gerenciamento de banco de dados
-- :desktop_computer: Insomnia para testes de API
-- :desktop_computer: Git para versionamento de código
-- :desktop_computer: Spotify para focar
-- :desktop_computer: Stack Overflow para debug
+- :desktop_computer: Visual Studio Code for coding
+- :desktop_computer: DBeaver for database management
+- :desktop_computer: Insomnia for API testing
+- :desktop_computer: Git for version control
+- :desktop_computer: Spotify for focus
+- :desktop_computer: Stack Overflow/CHATGPT for debugging
