@@ -41,14 +41,6 @@ João has a legacy system where he has a user database that he would like to mig
 - :ballot_box_with_check: Use of a service for static files;
 - :ballot_box_with_check: Deployment of the application.
 
-## Start
-
-To facilitate the consumption of the API, download the apinaruto.json file, which contains all available routes in the API. After downloading the file, import it into Insomnia.
-
-## API
-
-- Base URL: https://api-naruto-w2uc.onrender.com
-- Documentation: https://api-naruto-w2uc.onrender.com/docs
 
 ## Technologies
 
