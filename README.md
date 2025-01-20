@@ -1,4 +1,4 @@
-## Technical-Test(Semantix)
+## About
 
 João has a legacy system where he has a user database that he would like to migrate to the new system. The new system that João envisioned is a Wikipedia for an anime that he is a big fan of Naruto.
 
